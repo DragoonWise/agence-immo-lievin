@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block container %}
+<div class="text-center">
+    <h1>Listes des biens</h1>
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th>Libellé</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for property in properties %}
+            <tr>
+                <td>{{ property.label }}</td>
+                <td>{{ property.IdAddress.city }}</td>
+                <td>Modifier/Supprimer</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

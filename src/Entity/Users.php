@@ -50,6 +50,13 @@ class Users
     private $firstname = 'NULL';
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="IsAdmin", type="boolean", nullable=true)
+     */
+    private $isadmin = '0';
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
@@ -139,6 +146,18 @@ class Users
 
         return $this;
     }
+
+    public function getIsadmin(): ?bool
+    {
+        return $this->isadmin;
+    }
+
+    // public function setIsadmin(?bool $isadmin): self
+    // {
+    //     $this->isadmin = $isadmin;
+
+    //     return $this;
+    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

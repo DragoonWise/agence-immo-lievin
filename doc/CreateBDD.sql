@@ -34,6 +34,7 @@ Create Table Users (
     Password VARCHAR(255),
     LastName VARCHAR(255),
     FirstName VARCHAR(255),
+    IsAdmin boolean default 0,
     Created_at datetime default NOW (),
     Updated_at datetime default NOW (),
     Deleted_at datetime,
@@ -56,6 +57,7 @@ Create Table Properties (
     Id int AUTO_INCREMENT PRIMARY KEY,
     IdAddress int not null,
     IdPropertyType int not null,
+    IdUser int not null,
     Label VARCHAR(255) not null,
     Description text not null,
     IsRental boolean not null,
@@ -72,7 +74,8 @@ Create Table Properties (
     Deleted_at datetime,
     Deleted boolean default 0,
     CONSTRAINT FK_Properties_Address FOREIGN KEY (IdAddress) REFERENCES Addresses (Id),
-    CONSTRAINT FK_Properties_PropertyType FOREIGN KEY (IdPropertyType) REFERENCES PropertyTypes (Id)
+    CONSTRAINT FK_Properties_PropertyType FOREIGN KEY (IdPropertyType) REFERENCES PropertyTypes (Id),
+    CONSTRAINT FK_Properties_User FOREIGN KEY (IdUser) REFERENCES Users (Id)
   );
 Create Table Pictures (
     Id int AUTO_INCREMENT PRIMARY KEY,

@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block container %}
+<div class="text-center">
+    <h1>Listes des Utilisateurs</h1>
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for user in users %}
+    <tr>
+        <td>{{ user.email }}</td>
+        <td>{{ user.LastName }}</td>
+        <td>{{ user.FirstName }}</td>
+        <td>Modifier/Supprimer</td>
+    </tr>
+{% endfor %}
+        </tbody>
+    </table>
+<div>
+    <a class='btn btn-primary' href="{{path('adminusersadd')}}">Ajouter un utilisateur</a>
+</div>
+</div>
+{% endblock %}
