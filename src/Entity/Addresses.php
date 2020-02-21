@@ -26,77 +26,77 @@ class Addresses
      *
      * @ORM\Column(name="Address1", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address1 = 'NULL';
+    private $address1 = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address2", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address2 = 'NULL';
+    private $address2 = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address3", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address3 = 'NULL';
+    private $address3 = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address4", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address4 = 'NULL';
+    private $address4 = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="PostCode", type="string", length=20, nullable=true, options={"default"="NULL"})
      */
-    private $postcode = 'NULL';
+    private $postcode = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="City", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $city = 'NULL';
+    private $city = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="State", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $state = 'NULL';
+    private $state = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Country", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $country = 'NULL';
+    private $country = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $createdAt = 'current_timestamp()';
+    private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $updatedAt = 'current_timestamp()';
+    private $updatedAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Deleted_at", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $deletedAt = 'NULL';
+    private $deletedAt = null;
 
     /**
      * @var bool|null

@@ -33,21 +33,21 @@ class Users
      *
      * @ORM\Column(name="Password", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $password = 'NULL';
+    private $password = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="LastName", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $lastname = 'NULL';
+    private $lastname = null;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="FirstName", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $firstname = 'NULL';
+    private $firstname = null;
 
     /**
      * @var bool|null
@@ -61,21 +61,21 @@ class Users
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $createdAt = 'current_timestamp()';
+    private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $updatedAt = 'current_timestamp()';
+    private $updatedAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Deleted_at", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $deletedAt = 'NULL';
+    private $deletedAt = null;
 
     /**
      * @var bool|null
@@ -87,7 +87,7 @@ class Users
     /**
      * @var \Addresses
      *
-     * @ORM\ManyToOne(targetEntity="Addresses")
+     * @ORM\ManyToOne(targetEntity="Addresses",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="IdAddress", referencedColumnName="Id")
      * })
@@ -152,12 +152,12 @@ class Users
         return $this->isadmin;
     }
 
-    // public function setIsadmin(?bool $isadmin): self
-    // {
-    //     $this->isadmin = $isadmin;
+    public function setIsadmin(?bool $isadmin): self
+    {
+        $this->isadmin = $isadmin;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

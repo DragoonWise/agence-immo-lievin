@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Properties
  *
- * @ORM\Table(name="properties", indexes={@ORM\Index(name="FK_Properties_Address", columns={"IdAddress"}), @ORM\Index(name="FK_Properties_PropertyType", columns={"IdPropertyType"})})
+ * @ORM\Table(name="properties", indexes={@ORM\Index(name="FK_Properties_User", columns={"IdUser"}), @ORM\Index(name="FK_Properties_Address", columns={"IdAddress"}), @ORM\Index(name="FK_Properties_PropertyType", columns={"IdPropertyType"})})
  * @ORM\Entity(repositoryClass="App\Repository\PropertiesRepository")
  */
 class Properties
@@ -54,7 +54,7 @@ class Properties
      *
      * @ORM\Column(name="EnergyClass", type="string", length=1, nullable=true, options={"default"="NULL","fixed"=true})
      */
-    private $energyclass = 'NULL';
+    private $energyclass = null;
 
     /**
      * @var int
@@ -68,14 +68,14 @@ class Properties
      *
      * @ORM\Column(name="Rooms", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $rooms = 'NULL';
+    private $rooms = null;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="BedRooms", type="integer", nullable=true, options={"default"="NULL"})
      */
-    private $bedrooms = 'NULL';
+    private $bedrooms = null;
 
     /**
      * @var bool|null
@@ -96,28 +96,28 @@ class Properties
      *
      * @ORM\Column(name="Ref", type="string", length=50, nullable=true, options={"default"="NULL"})
      */
-    private $ref = 'NULL';
+    private $ref = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $createdAt = 'current_timestamp()';
+    private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $updatedAt = 'current_timestamp()';
+    private $updatedAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Deleted_at", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $deletedAt = 'NULL';
+    private $deletedAt = null;
 
     /**
      * @var bool|null
@@ -129,7 +129,7 @@ class Properties
     /**
      * @var \Addresses
      *
-     * @ORM\ManyToOne(targetEntity="Addresses")
+     * @ORM\ManyToOne(targetEntity="Addresses",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="IdAddress", referencedColumnName="Id")
      * })
@@ -145,6 +145,16 @@ class Properties
      * })
      */
     private $idpropertytype;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
+     * })
+     */
+    private $iduser;
 
     public function getId(): ?int
     {
@@ -351,6 +361,18 @@ class Properties
     public function setIdpropertytype(?Propertytypes $idpropertytype): self
     {
         $this->idpropertytype = $idpropertytype;
+
+        return $this;
+    }
+
+    public function getIduser(): ?Users
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?Users $iduser): self
+    {
+        $this->iduser = $iduser;
 
         return $this;
     }

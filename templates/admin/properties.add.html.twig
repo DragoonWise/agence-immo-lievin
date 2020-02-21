@@ -3,15 +3,15 @@
 
 {% block container %}
 <div class="text-center mt-4">
-    <h1>Ajouter un utilisateur</h1>
+    <h1>Ajouter un bien</h1>
 </div>
 
 {{ form_start(form, {'method': 'POST'}) }}
 {{ form_errors(form) }}
-{{ form_row(form.email) }}
+{{ form_row(form.label) }}
 <div class="row">
-    <div class="col-6">{{ form_row(form.lastname) }}</div>
-    <div class="col-6">{{ form_row(form.firstname) }}</div>
+    <div class="col-6">{{ form_row(form.idpropertytype) }}</div>
+    <div class="col-6">{{ form_row(form.isrental) }}</div>
 </div>
 <fieldset>
     <legend>Adresse</legend>
@@ -28,7 +28,7 @@
         <div class="col-6">{{ form_row(form.idaddress.country) }}</div>
     </div>
 </fieldset>
-{{ form_row(form.submit, { 'label': 'Ajouter l\'utilisateur' }) }}
+{{ form_row(form.submit, { 'label': 'Ajouter le bien' }) }}
 {{ form_end(form) }}
 
 {% endblock %}

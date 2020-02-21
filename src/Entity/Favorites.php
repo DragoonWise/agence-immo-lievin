@@ -26,7 +26,7 @@ class Favorites
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $createdAt = 'current_timestamp()';
+    private $createdAt = null;
 
     /**
      * @var \Properties

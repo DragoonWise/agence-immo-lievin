@@ -4,6 +4,11 @@ CREATE DATABASE AgenceImmoLievin DEFAULT CHARSET = utf8 COLLATE utf8_bin;
 Use AgenceImmoLievin;
 SET
   default_storage_engine = INNODB;
+CREATE TABLE Countries (
+    id int NOT NULL auto_increment PRIMARY KEY,
+    country_code varchar(2) NOT NULL,
+    country_name varchar(100) NOT NULL
+  );
 Create Table Addresses (
     Id int AUTO_INCREMENT PRIMARY KEY,
     Address1 varchar(80),
@@ -14,18 +19,18 @@ Create Table Addresses (
     City varchar(80),
     State varchar(80),
     Country varchar(80),
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0
+    Deleted boolean NOT NULL default 0
   );
 Create Table PropertyTypes (
     Id int AUTO_INCREMENT PRIMARY KEY,
     Label VARCHAR(50) not null,
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0
+    Deleted boolean NOT NULL default 0
   );
 Create Table Users (
     Id int AUTO_INCREMENT PRIMARY KEY,
@@ -34,11 +39,11 @@ Create Table Users (
     Password VARCHAR(255),
     LastName VARCHAR(255),
     FirstName VARCHAR(255),
-    IsAdmin boolean default 0,
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    IsAdmin boolean NOT NULL default 0,
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0,
+    Deleted boolean NOT NULL default 0,
     CONSTRAINT FK_Users_Address FOREIGN KEY (IdAddress) REFERENCES Addresses (Id)
   );
 Create Table Messages (
@@ -46,11 +51,11 @@ Create Table Messages (
     IdUser int not null,
     ObjectMessage varchar (255) not null,
     Content text not null,
-    IsRead boolean default 0,
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    IsRead boolean NOT NULL default 0,
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0,
+    Deleted boolean NOT NULL default 0,
     CONSTRAINT FK_Messages_User FOREIGN KEY (IdUser) REFERENCES Users (Id)
   );
 Create Table Properties (
@@ -66,32 +71,32 @@ Create Table Properties (
     LivingSpace int not null,
     Rooms int,
     BedRooms int,
-    IsVisible boolean DEFAULT 0,
-    IsTop boolean DEFAULT 0,
+    IsVisible boolean NOT NULL DEFAULT 0,
+    IsTop boolean NOT NULL DEFAULT 0,
     Ref varchar(50),
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0,
+    Deleted boolean NOT NULL default 0,
     CONSTRAINT FK_Properties_Address FOREIGN KEY (IdAddress) REFERENCES Addresses (Id),
     CONSTRAINT FK_Properties_PropertyType FOREIGN KEY (IdPropertyType) REFERENCES PropertyTypes (Id),
     CONSTRAINT FK_Properties_User FOREIGN KEY (IdUser) REFERENCES Users (Id)
   );
 Create Table Pictures (
     Id int AUTO_INCREMENT PRIMARY KEY,
-    IdProperty int,
+    IdProperty int NOT NULL,
     Label VARCHAR(50),
-    Created_at datetime default NOW (),
-    Updated_at datetime default NOW (),
+    Created_at datetime NOT NULL default NOW(),
+    Updated_at datetime NOT NULL default NOW(),
     Deleted_at datetime,
-    Deleted boolean default 0,
+    Deleted boolean NOT NULL default 0,
     CONSTRAINT FK_Pictures_Property FOREIGN KEY (IdProperty) REFERENCES Properties (Id)
   );
 Create Table Favorites (
     Id int AUTO_INCREMENT PRIMARY KEY,
-    IdUser int,
-    IdProperty int,
-    Created_at datetime default NOW (),
+    IdUser int NOT NULL,
+    IdProperty int NOT NULL,
+    Created_at datetime NOT NULL default NOW(),
     CONSTRAINT FK_Favorites_User FOREIGN KEY (IdUser) REFERENCES Users (Id),
     CONSTRAINT FK_Favorites_Property FOREIGN KEY (IdProperty) REFERENCES Properties (Id)
   );

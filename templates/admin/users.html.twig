@@ -13,18 +13,18 @@
             </tr>
         </thead>
         <tbody>
-{% for user in users %}
-    <tr>
-        <td>{{ user.email }}</td>
-        <td>{{ user.LastName }}</td>
-        <td>{{ user.FirstName }}</td>
-        <td>Modifier/Supprimer</td>
-    </tr>
-{% endfor %}
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.LastName }}</td>
+                <td>{{ user.FirstName }}</td>
+                <td>Modifier/Supprimer</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-<div>
-    <a class='btn btn-primary' href="{{path('adminusersadd')}}">Ajouter un utilisateur</a>
-</div>
+    <div>
+        <a class='btn btn-primary' href="{{path('adminusersadd')}}">Ajouter un utilisateur</a>
+    </div>
 </div>
 {% endblock %}

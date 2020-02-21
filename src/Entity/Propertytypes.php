@@ -33,21 +33,21 @@ class Propertytypes
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $createdAt = 'current_timestamp()';
+    private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
      */
-    private $updatedAt = 'current_timestamp()';
+    private $updatedAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Deleted_at", type="datetime", nullable=true, options={"default"="NULL"})
      */
-    private $deletedAt = 'NULL';
+    private $deletedAt = null;
 
     /**
      * @var bool|null
