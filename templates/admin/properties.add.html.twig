@@ -10,8 +10,29 @@
 {{ form_errors(form) }}
 {{ form_row(form.label) }}
 <div class="row">
-    <div class="col-6">{{ form_row(form.idpropertytype) }}</div>
-    <div class="col-6">{{ form_row(form.isrental) }}</div>
+    <div class="col-4">{{ form_row(form.idpropertytype) }}</div>
+    <div class="col-4">{{ form_row(form.isrental) }}</div>
+    <div class="col-4">{{ form_row(form.price) }}</div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-3">{{ form_row(form.energyclass) }}</div>
+    <div class="col-12 col-md-6 col-lg-3">{{ form_row(form.livingspace) }}</div>
+    <div class="col-12 col-md-6 col-lg-3">{{ form_row(form.rooms) }}</div>
+    <div class="col-12 col-md-6 col-lg-3">{{ form_row(form.bedrooms) }}</div>
+</div>
+{{ form_row(form.iduser) }}
+{{ form_row(form.description) }}
+<div class="row">
+    <div class="col-12 col-md-6">
+        {{ form_row(form.ref) }}
+    </div>
+    <fieldset class="col-12 col-md-6">
+        <legend>Status</legend>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.isvisible) }}</div>
+            <div class="col-6">{{ form_row(form.istop) }}</div>
+        </div>
+    </fieldset>
 </div>
 <fieldset>
     <legend>Adresse</legend>

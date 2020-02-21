@@ -9,6 +9,7 @@ use App\Form\UsersType;
 use App\Repository\CountriesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,13 +64,12 @@ class AdminController extends AbstractController
             // $form->getData() holds the submitted values
             // but, the original `$data` variable has also been updated
             $data = $form->getData();
-
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
 
-            return $this->redirectToRoute('adminusers');
+            return $this->redirectToRoute('adminproperties');
         }
 
         return $this->render('admin/properties.add.html.twig', [

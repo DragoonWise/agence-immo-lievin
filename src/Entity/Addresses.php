@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,70 +27,70 @@ class Addresses
      *
      * @ORM\Column(name="Address1", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address1 = null;
+    private $address1 = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address2", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address2 = null;
+    private $address2 = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address3", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address3 = null;
+    private $address3 = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Address4", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $address4 = null;
+    private $address4 = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="PostCode", type="string", length=20, nullable=true, options={"default"="NULL"})
      */
-    private $postcode = null;
+    private $postcode = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="City", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $city = null;
+    private $city = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="State", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $state = null;
+    private $state = 'NULL';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Country", type="string", length=80, nullable=true, options={"default"="NULL"})
      */
-    private $country = null;
+    private $country = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="Created_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
      */
     private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="Updated_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
      */
-    private $updatedAt = null;
+    private $updatedAt;
 
     /**
      * @var \DateTime|null

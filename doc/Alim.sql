@@ -1,32 +1,10 @@
 use agenceimmolievin;
 Start TRANSACTION;
-INSERT INTO `propertytypes` (
-    `Id`,
-    `Label`,
-    `Created_at`,
-    `Updated_at`,
-    `Deleted_at`,
-    `Deleted`
-  )
+INSERT INTO `propertytypes` (`Label`)
 VALUES
-  (
-    1,
-    'Maison',
-    '2020-02-20 12:41:12',
-    '2020-02-20 12:41:12',
-    NULL,
-    NULL
-  ),
-  (
-    2,
-    'Appartement',
-    '2020-02-20 12:41:12',
-    '2020-02-20 12:41:12',
-    NULL,
-    NULL
-  );
+  ('Maison'),
+  ('Appartement');
 INSERT INTO `addresses` (
-    `Id`,
     `Address1`,
     `Address2`,
     `Address3`,
@@ -34,15 +12,10 @@ INSERT INTO `addresses` (
     `PostCode`,
     `City`,
     `State`,
-    `Country`,
-    `Created_at`,
-    `Updated_at`,
-    `Deleted_at`,
-    `Deleted`
+    `Country`
   )
 VALUES
   (
-    1,
     '',
     '',
     '36 avenue michel bizot',
@@ -50,56 +23,36 @@ VALUES
     '75012',
     'Paris',
     NULL,
-    'France',
-    '2020-02-20 12:40:13',
-    '2020-02-20 12:40:13',
-    NULL,
-    NULL
+    'FR'
   ),
   (
-    2,
     '',
     '',
-    '36 avenue michel bizot',
+    '12 avenue michel bizot',
     '',
     '75012',
     'Paris',
     NULL,
-    'France',
-    '2020-02-20 12:40:22',
-    '2020-02-20 12:40:22',
-    NULL,
-    NULL
+    'FR'
   );
 INSERT INTO `users` (
-    `Id`,
     `IdAddress`,
     `Email`,
     `Password`,
     `LastName`,
     `FirstName`,
-    `IsAdmin`,
-    `Created_at`,
-    `Updated_at`,
-    `Deleted_at`,
-    `Deleted`
+    `IsAdmin`
   )
 VALUES
   (
-    NULL,
     '1',
     'dragoonwise@outlook.fr',
     '$2y$10$.DXhlAOlPtH4GM37/gOMo.VH3KvbAVbbOLu68vwTScypJ4l3c7gtC',
     'Dragoon',
     'Wise',
-    '1',
-    current_timestamp(),
-    current_timestamp(),
-    NULL,
-    '0'
+    '1'
   );
 INSERT INTO `properties` (
-    `Id`,
     `IdAddress`,
     `IdPropertyType`,
     `IdUser`,
@@ -113,15 +66,10 @@ INSERT INTO `properties` (
     `BedRooms`,
     `IsVisible`,
     `IsTop`,
-    `Ref`,
-    `Created_at`,
-    `Updated_at`,
-    `Deleted_at`,
-    `Deleted`
+    `Ref`
   )
 VALUES
   (
-    NULL,
     '1',
     '2',
     '1',
@@ -135,11 +83,7 @@ VALUES
     '1',
     '0',
     '0',
-    NULL,
-    current_timestamp(),
-    current_timestamp(),
-    NULL,
-    '0'
+    NULL
   );
 INSERT INTO `Countries`
 VALUES
