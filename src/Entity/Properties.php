@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Properties
  *
  * @ORM\Table(name="properties", indexes={@ORM\Index(name="FK_Properties_User", columns={"IdUser"}), @ORM\Index(name="FK_Properties_Address", columns={"IdAddress"}), @ORM\Index(name="FK_Properties_PropertyType", columns={"IdPropertyType"})})
  * @ORM\Entity(repositoryClass="App\Repository\PropertiesRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
  */
 class Properties
 {
@@ -102,13 +104,15 @@ class Properties
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-     */
+      * @Gedmo\Timestampable(on="create")
+    */
     private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $updatedAt = null;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users", indexes={@ORM\Index(name="FK_Users_Address", columns={"IdAddress"})})
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
- */
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
+*/
 class Users
 {
     /**
@@ -60,6 +62,7 @@ class Users
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $createdAt = null;
 
@@ -67,7 +70,9 @@ class Users
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-     */
+     * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="update")
+    */
     private $updatedAt = null;
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Propertytypes
@@ -32,6 +33,7 @@ class Propertytypes
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+   * @Gedmo\Timestampable(on="create")
      */
     private $createdAt = null;
 
@@ -39,7 +41,8 @@ class Propertytypes
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-     */
+    * @Gedmo\Timestampable(on="create")
+    */
     private $updatedAt = null;
 
     /**
