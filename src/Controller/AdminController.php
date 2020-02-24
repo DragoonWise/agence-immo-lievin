@@ -217,10 +217,16 @@ class AdminController extends AbstractController
      */
     public function importexport()
     {
-        $users = $this->_usersRepository->findAll();
-        return $this->render('admin/users.html.twig', [
+        return $this->render('admin/importexport.html.twig', [
             'controller_name' => 'AdminController',
-            'users' => $users,
+            'analyse' => null
+        ]);
+    }
+
+    public function importanalyse($filename)
+    {
+        return $this->render('admin/_importanalyse.html.twig', [
+            'analyse' => null
         ]);
     }
 
