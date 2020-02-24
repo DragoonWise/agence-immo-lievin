@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Users
@@ -11,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="users", indexes={@ORM\Index(name="FK_Users_Address", columns={"IdAddress"})})
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
-*/
-class Users
+ */
+class Users implements UserInterface
 {
     /**
      * @var int
@@ -26,9 +27,11 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="Email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="Email", type="string", length=255, nullable=false, unique=true)
      */
     private $email;
+
+    private $roles = [];
 
     /**
      * @var string|null
@@ -70,9 +73,8 @@ class Users
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-     * @Gedmo\Timestampable(on="create")
      * @Gedmo\Timestampable(on="update")
-    */
+     */
     private $updatedAt = null;
 
     /**
@@ -224,5 +226,45 @@ class Users
         return $this;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
 
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        if ($this->getisadmin())
+            $roles[] = 'ROLE_ADMIN';
+        else
+            $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

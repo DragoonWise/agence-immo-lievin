@@ -55,7 +55,7 @@ class Messages
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-    * @Gedmo\Timestampable(on="create")
+    * @Gedmo\Timestampable(on="update")
     */
     private $updatedAt = null;
 
