@@ -4,11 +4,12 @@
 
 {% block body %}
 {% include "home/_header.html.twig" %}
+{% include "home/_menu.html.twig" %}
 {% if app.user %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-2">
-            {% include "home/_menu.html.twig" %}
+            {% include "userspace/_menu.html.twig" %}
         </div>
         <div class="col-12 col-md-10">
             {% else %}
