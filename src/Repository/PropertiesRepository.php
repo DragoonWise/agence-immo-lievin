@@ -19,6 +19,24 @@ class PropertiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Properties::class);
     }
 
+    public function reactivate(int $id)
+    {
+        $property = $this->findOneBy(['id' => $id]);
+        $property->setDeleted(0);
+        $property->setDeletedAt(null);
+        $this->_em->persist($property);
+        $this->_em->flush();
+    }
+
+    public function delete(int $id)
+    {
+        $property = $this->findOneBy(['id' => $id]);
+        $property->setDeleted(1);
+        $property->setDeletedAt(date_create());
+        $this->_em->persist($property);
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return Properties[] Returns an array of Properties objects
     //  */

@@ -31,8 +31,6 @@ class Users implements UserInterface
      */
     private $email;
 
-    private $roles = [];
-
     /**
      * @var string|null
      *
@@ -125,8 +123,8 @@ class Users implements UserInterface
 
     public function setPassword(?string $password): self
     {
-        $this->password = $password;
-
+        if (!is_null($password) && password_needs_rehash($password,PASSWORD_BCRYPT))
+            $this->password = password_hash($password, PASSWORD_BCRYPT);
         return $this;
     }
 
@@ -241,7 +239,7 @@ class Users implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = [];
         // guarantee every user at least has ROLE_USER
         if ($this->getisadmin())
             $roles[] = 'ROLE_ADMIN';

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Users;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,7 @@ class UsersType extends AbstractType
             ->add('firstname',null,['label'=>'Prénom : '])
             ->add('idaddress',AddressType::class)
             ->add('submit', SubmitType::class,['label'=>'Ajouter l\'utilisateur'])
+            ->add('password',PasswordType::class,['label'=>'Mot de Passe : ','required'=>false])
         ;
     }
 

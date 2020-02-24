@@ -32,7 +32,7 @@ class PropertiesType extends AbstractType
             ->add('rooms', null, ['label' => 'Nombre de pièces :'])
             ->add('bedrooms', null, ['label' => 'Nombre de chambres :'])
             ->add('isvisible',null,['label'=> 'Est Visible ?'])
-            ->add('istop',null,['label'=> 'Est inclus dans les Top Offres ?'])
+            ->add('istop',null,['label'=> 'Est une offre Top ?'])
             ->add('ref',null,['label'=> 'Référence :'])
             ->add('idaddress', AddressType::class)
             ->add('idpropertytype', EntityType::class, ['label' => 'Type de Bien :', 'class' => Propertytypes::class, 'choice_label' => 'label'])
@@ -43,6 +43,7 @@ class PropertiesType extends AbstractType
                     return $user->getEmail() . " - " . $user->getLastName() . " " . $user->getFirstName();
                 }
             ])
+            // ->add('deleted',null,['label'=>'Est inactif ?'])
             ->add('submit', SubmitType::class, ['label' => 'Ajouter le bien']);
     }
 

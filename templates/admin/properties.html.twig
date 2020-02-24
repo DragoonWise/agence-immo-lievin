@@ -16,7 +16,13 @@
             <tr>
                 <td>{{ property.label }}</td>
                 <td>{{ property.IdAddress.city }}</td>
-                <td>Modifier/Supprimer</td>
+                <td><a href="{{ path('adminpropertiesedit', {id: property.id}) }}">Modifier</a>
+                    /{% if property.deleted %}
+                    <a href="{{ path('adminpropertiesreactivate', {id: property.id}) }}">Réactiver</a>
+                    {% else %}
+                    <a href="{{ path('adminpropertiesdelete', {id: property.id}) }}">Supprimer</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

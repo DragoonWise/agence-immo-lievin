@@ -35,6 +35,24 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    public function reactivate(int $id)
+    {
+        $user = $this->findOneBy(['id'=>$id]);
+        $user->setDeleted(0);
+        $user->setDeletedAt(null);
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    public function delete(int $id)
+    {
+        $user = $this->findOneBy(['id'=>$id]);
+        $user->setDeleted(1);
+        $user->setDeletedAt(date_create());
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
     // /**
     //  * @return Users[] Returns an array of Users objects
     //  */

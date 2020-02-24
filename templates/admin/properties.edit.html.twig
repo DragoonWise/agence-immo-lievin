@@ -3,7 +3,7 @@
 
 {% block container %}
 <div class="text-center mt-4">
-    <h1>Ajouter un bien</h1>
+    <h1>Modifier un bien</h1>
 </div>
 
 {{ form_start(form, {'method': 'POST'}) }}
@@ -51,7 +51,7 @@
         <div class="col-6">{{ form_row(form.idaddress.country) }}</div>
     </div>
 </fieldset>
-{{ form_row(form.submit, { 'label': 'Ajouter le bien' }) }}
+{{ form_row(form.submit, { 'label': 'Mettre à jour le bien' }) }}
 {{ form_end(form) }}
 
 {% endblock %}

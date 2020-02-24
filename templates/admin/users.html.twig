@@ -18,7 +18,15 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.LastName }}</td>
                 <td>{{ user.FirstName }}</td>
-                <td>Modifier/Supprimer</td>
+                <td><a href="{{ path('adminusersedit', {id: user.id}) }}">Modifier</a>
+                    {% if app.user.id != user.id %}
+                    /{% if user.deleted %}
+                    <a href="{{ path('adminusersreactivate', {id: user.id}) }}">Réactiver</a>
+                    {% else %}
+                    <a href="{{ path('adminusersdelete', {id: user.id}) }}">Supprimer</a>
+                    {% endif %}
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>

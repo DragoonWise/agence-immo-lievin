@@ -3,14 +3,14 @@
 
 {% block container %}
 <div class="text-center mt-4">
-    <h1>Ajouter un utilisateur</h1>
+    <h1>Modifier un utilisateur</h1>
 </div>
 
 {{ form_start(form, {'method': 'POST'}) }}
 {{ form_errors(form) }}
-{{ form_row(form.email) }}
-<div class="d-none">
-    {{ form_row(form.password,{'disabled': true}) }}
+<div class="row">
+    <div class="col-6">{{ form_row(form.email) }}</div>
+    <div class="col-6">{{ form_row(form.password) }}</div>
 </div>
 <div class="row">
     <div class="col-6">{{ form_row(form.lastname) }}</div>
@@ -31,7 +31,7 @@
         <div class="col-6">{{ form_row(form.idaddress.country) }}</div>
     </div>
 </fieldset>
-{{ form_row(form.submit, { 'label': 'Ajouter l\'utilisateur' }) }}
+{{ form_row(form.submit, { 'label': 'Mettre à jour l\'utilisateur' }) }}
 {{ form_end(form) }}
 
 {% endblock %}
