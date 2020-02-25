@@ -3,38 +3,40 @@
 {% block container %}
 <div class="row border">
     <!-- Import -->
-    <form action="POST" class="row col-12" id="importform">
+    <form action="" class="row col-12" id="importform" method="POST">
         <div class="form-group col-12">
-            <label for="importfile">Importer la liste des biens (format CSV)</label>
+            <h2><label for="importfile">Importer la liste des biens (format CSV)</label></h2>
             <input type="file" name="exportfile" id="importfile" class='form-control'>
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 text-center mb-2">
             <button class="btn btn-primary">Analyser</button>
         </div>
     </form>
-    {% if analyse %}
-    {{ render(controller(
-        'App\\Controller\\AdminController::importanalyse', {analyse : analyse}
-    )) }}
-    {% endif %}
+    <div class="col-12" id="analyseimport">
+        {% if analyse %}
+        <div class="col-12 text-center bg-light">
+            <span>Résultat de l'analyse</span>
+            <span>Nombre d'enregistrements : {{ analyse.count }} </span>
+        </div>
+        {% endif %}
+    </div>
 </div>
 <div class="row border">
     <!-- Export -->
-    <form action="POST" class="col-12 row" id="exportform">
+    <form action="" class="col-12 row" id="exportform" method="POST">
         <div class="form-group col-12">
-            <label for="exportfile">Exporter la liste des biens (format CSV)</label>
-            <input type="file" name="exportfile" id="exportfile" class='form-control'>
+            <h2>Exporter la liste des biens (format CSV)</h2>
         </div>
-        <div class="form-group col-4">
-            <span>Du : </span>
-            <input type="date" name="" id="">
+        <div class="form-group col-12 col-md-4">
+            <label for='exportdate1'>Du : </label>
+            <input type="date" name="exportdate1" id="exportdate1">
         </div>
-        <div class="form-group col-4">
-            <span>Au : </span>
-            <input type="date" name="" id="">
+        <div class="form-group col-12 col-md-4">
+            <label for='exportdate2'>Au : </label>
+            <input type="date" name="exportdate2" id="exportdate2">
         </div>
-        <div class="form-group col-4">
-            <button class="btn btn-primary">Exporter</button>
+        <div class="form-group col-12 col-md-4">
+            <button class="btn btn-primary" type="submit">Exporter</button>
         </div>
     </form>
 </div>
