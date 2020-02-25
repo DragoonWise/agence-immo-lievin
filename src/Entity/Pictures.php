@@ -33,15 +33,15 @@ class Pictures
      * @var \DateTime|null
      *
      * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-    * @Gedmo\Timestampable(on="create")
-    */
+     * @Gedmo\Timestampable(on="create")
+     */
     private $createdAt = null;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-   * @Gedmo\Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt = null;
 
@@ -62,10 +62,8 @@ class Pictures
     /**
      * @var \Properties
      *
-     * @ORM\ManyToOne(targetEntity="Properties")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdProperty", referencedColumnName="Id")
-     * })
+     * @ORM\ManyToOne(targetEntity="App\Entity\Properties", inversedBy="Images")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $idproperty;
 
@@ -145,6 +143,4 @@ class Pictures
 
         return $this;
     }
-
-
 }

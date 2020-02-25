@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -159,6 +161,16 @@ class Properties
      * })
      */
     private $iduser;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="idproperty")
+     */
+    private $Images;
+
+    public function __construct()
+    {
+        $this->Images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -377,6 +389,37 @@ class Properties
     public function setIduser(?Users $iduser): self
     {
         $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pictures[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->Images;
+    }
+
+    public function addImage(Pictures $image): self
+    {
+        if (!$this->Images->contains($image)) {
+            $this->Images[] = $image;
+            $image->setIdProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Pictures $image): self
+    {
+        if ($this->Images->contains($image)) {
+            $this->Images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getIdProperty() === $this) {
+                $image->setIdProperty(null);
+            }
+        }
 
         return $this;
     }
