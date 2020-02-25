@@ -1,0 +1,10 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block container %}
+<div class="text-center">
+    <h1>Visualisation du Message</h1>
+</div>
+{{ form(form) }}
+
+<a href="{{ path('adminmails')}}" class="btn btn-primary">Retour</a>
+{% endblock %}

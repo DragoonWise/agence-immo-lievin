@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Properties;
 use App\Entity\Users;
+use App\Form\MailType;
 use App\Form\PropertiesType;
 use App\Form\UsersType;
 use App\Repository\CountriesRepository;
+use App\Repository\MessagesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
 use DateTime;
@@ -81,9 +83,9 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/properties/edit/{id}", name="adminpropertiesedit")
      */
-    public function propertiesedit(Request $request,int $id)
+    public function propertiesedit(Request $request, int $id)
     {
-        $properties = $this->_propertiesRepository->findOneBy(['id'=>$id]);
+        $properties = $this->_propertiesRepository->findOneBy(['id' => $id]);
         $form = $this->createForm(PropertiesType::class, $properties);
 
         $form->handleRequest($request);
@@ -233,12 +235,31 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/mails", name="adminmails")
      */
-    public function mails()
+    public function mails(MessagesRepository $messagesRepository)
     {
-        $users = $this->_usersRepository->findAll();
-        return $this->render('admin/users.html.twig', [
+        $mails = $messagesRepository->findAll();
+        return $this->render('admin/mails.html.twig', [
             'controller_name' => 'AdminController',
-            'users' => $users,
+            'mails' => $mails,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/mails/view/{id}", name="adminmailsview")
+     */
+    public function mailsview(Request $request,int $id,MessagesRepository $messagesRepository)
+    {
+        $mail = $messagesRepository->findOneBy(['id'=>$id]);
+        $form = $this->createForm(MailType::class, $mail);
+        $form->handleRequest($request);
+        $mail->setIsread(true);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($mail);
+        $entityManager->flush();
+
+        return $this->render('admin/mails.view.html.twig', [
+            'controller_name' => 'AdminController',
+            'form' => $form->createView(),
         ]);
     }
 }
