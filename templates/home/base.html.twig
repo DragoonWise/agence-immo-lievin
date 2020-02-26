@@ -1,24 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block body %}
 {% include "home/_header.html.twig" %}
 {% include "home/_menu.html.twig" %}
-{% if app.user %}
-<div class="container-fluid">
+<div {% if app.user %}class="container-fluid" {% else %} class="container" {% endif %}>
     <div class="row">
-        <div class="col-12 col-md-2">
-            {% include "userspace/_menu.html.twig" %}
+        {% include "userspace/_menu.html.twig" %}
+        <div {% if app.user %}class="col-12 col-md-10" {% else %} class="col-12" {% endif %}>
+            {% block content %}{% endblock %}
         </div>
-        <div class="col-12 col-md-10">
-            {% else %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        {% endif %}
-                        {% block content %}{% endblock %}
-                    </div>
-                </div>
-            </div>
-            {% endblock %}
+    </div>
+</div>
+{% include "home/_footer.html.twig" %}
+{% endblock %}

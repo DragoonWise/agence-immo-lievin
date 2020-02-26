@@ -1,0 +1,42 @@
+{% extends 'home/base.html.twig' %}
+
+{% block  content %}
+<div class="row mt-2">
+    <div class="col-4">
+        <img src="{{ asset('build/images/empty.jpg') | imagine_filter('view') }}" alt="" class="img-fluid">
+        <div class="row m-1">
+            <div class="col-4">
+                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <h1>{{property.label}}</h1>
+        <p>
+            <b>{% if property.isrental %}
+                Location
+                {% else %}
+                Vente
+                {% endif %} Réf :</b> {{ property.ref }}<br>
+            <b>Type de bien :</b> {{ property.idpropertytype.label }}<br>
+            <b>Nombre de pièces :</b> {{ property.rooms }}<br>
+            <b>Nombre de chambres :</b> {{ property.bedrooms }}<br>
+            <b>Surface :</b> {{ property.livingspace }} m²<br>
+            <b>Emplacement :</b> {{ property.idaddress.city }} ({{ property.idaddress.postcode }})<br>
+            <b>Classe énergétique :</b> {{ property.energyclass }}<br>
+            <b>Description :</b><br>
+            <p>{{ property.description }}</p>
+        </p>
+        <form action="{{ path('sendmail') }}" method="post">
+            <input type="hidden" name="idproperty" value="{{ property.id }}">
+            <button class="btn btn-primary" type="submit">Nous contacter concernant ce bien</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

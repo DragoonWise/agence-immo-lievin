@@ -3,17 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Properties;
+use App\Entity\PropertySearch;
 use App\Entity\Users;
+use App\Form\AdminPropertiesType;
 use App\Form\MailType;
-use App\Form\PropertiesType;
 use App\Form\UsersType;
 use App\Repository\CountriesRepository;
 use App\Repository\MessagesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
-use DateTime;
-use Presta\ImageBundle\Form\Type\ImageType;
-use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,7 +46,8 @@ class AdminController extends AbstractController
      */
     public function properties(int $page = 1)
     {
-        $properties = $this->_propertiesRepository->PaginatedAll($page);
+        $search = new PropertySearch;
+        $properties = $this->_propertiesRepository->PaginatedAll($search,$page);
         return $this->render('admin/properties.html.twig', [
             'controller_name' => 'AdminController',
             'properties' => $properties,
@@ -61,7 +60,7 @@ class AdminController extends AbstractController
     public function propertiesadd(Request $request)
     {
         $properties = new Properties();
-        $form = $this->createForm(PropertiesType::class, $properties);
+        $form = $this->createForm(AdminPropertiesType::class, $properties);
         // $form2 = $this->createForm(ImageType::class);
         $form->handleRequest($request);
         //        $form2->handleRequest($request);
@@ -90,7 +89,7 @@ class AdminController extends AbstractController
     public function propertiesedit(Request $request, int $id)
     {
         $properties = $this->_propertiesRepository->findOneBy(['id' => $id]);
-        $form = $this->createForm(PropertiesType::class, $properties);
+        $form = $this->createForm(AdminPropertiesType::class, $properties);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

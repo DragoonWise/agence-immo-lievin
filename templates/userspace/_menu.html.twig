@@ -1,5 +1,9 @@
-<ul class="list-unstyled mt-5">
-    <li>Informations Personnelles</li>
-    <li>Mes Favoris</li>
-    <li>Proposer un bien</li>
-</ul>
+{% if app.user %}
+<div class="col-12 col-md-2">
+    <ul class="list-unstyled mt-5">
+        <li><a href="{{ path('userprofil') }}">Informations Personnelles</a></li>
+        <li>Mes Favoris</li>
+        <li><a href="{{ path('userpropose') }}">Proposer un bien</a></li>
+    </ul>
+</div>
+{% endif %}

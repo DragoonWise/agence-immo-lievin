@@ -1,0 +1,19 @@
+<div class="col-4">
+    <div class="card mx-4 mb-4">
+        <div class="card-header">
+            <a href="{{ path('propertyview',{id : property.id }) }}"><img src="{{ asset('build/images/empty.jpg') | imagine_filter('card') }}" alt="" class='img-fluid'></a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ property.label }}</h5>
+            <p class="card-text">{{ property.rooms }} Pièces - {{ property.livingspace }}
+                m²<br>{{ property.idpropertytype.label}}<br>{{ property.idaddress.city }}
+        </div>
+        <div class="card-footer">
+            {% if property.isrental %}
+            Location : {{ property.price }} €/Mois
+            {% else %}
+            Prix de Vente : {{ property.price }} €
+            {% endif %}
+        </div>
+    </div>
+</div>

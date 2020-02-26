@@ -1,14 +1,14 @@
 {% extends 'home/base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block content %}
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/agence-immo-lievin/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/agence-immo-lievin/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-    <a href="{{ path('admin') }}">admin</a>
+Carrousel
+<fieldset class='border'>
+    <legend class="w-auto mx-auto">Top Offres</legend>
+    <div class="row">
+        {% for property in properties %}
+        {{ include('home/_property.card.html.twig',{property : property}) }}
+        {% endfor %}
+        {{ knp_pagination_render(properties) }}
+    </div>
+</fieldset>
 {% endblock %}

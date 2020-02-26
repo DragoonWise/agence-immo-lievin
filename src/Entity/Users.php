@@ -123,7 +123,7 @@ class Users implements UserInterface
 
     public function setPassword(?string $password): self
     {
-        if (!is_null($password) && password_needs_rehash($password,PASSWORD_BCRYPT))
+        if (!is_null($password) && password_needs_rehash($password, PASSWORD_BCRYPT))
             $this->password = password_hash($password, PASSWORD_BCRYPT);
         return $this;
     }
@@ -243,8 +243,7 @@ class Users implements UserInterface
         // guarantee every user at least has ROLE_USER
         if ($this->getisadmin())
             $roles[] = 'ROLE_ADMIN';
-        else
-            $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

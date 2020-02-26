@@ -1,0 +1,24 @@
+{% extends 'home/base.html.twig' %}
+
+{% block content %}
+{{ form_start(form, {'method': 'POST'}) }}
+{{ form_errors(form) }}
+{{ form_row(form.label) }}
+<div class="row">
+    <div class="col-4">{{ form_row(form.idpropertytype) }}</div>
+    <div class="col-4">{{ form_row(form.isrental) }}</div>
+    <div class="col-4">{{ form_row(form.price) }}</div>
+</div>
+<div class="row">
+    <div class="col-12">{{ form_row(form.city) }}</div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-4">{{ form_row(form.livingspace) }}</div>
+    <div class="col-12 col-md-4">{{ form_row(form.rooms) }}</div>
+    <div class="col-12 col-md-4">{{ form_row(form.bedrooms) }}</div>
+</div>
+{{ form_row(form.description) }}
+
+{{ form_row(form.submit, { 'label': 'Ajouter le bien' }) }}
+{{ form_end(form) }}
+{% endblock %}

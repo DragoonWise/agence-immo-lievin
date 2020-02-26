@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Properties;
+use App\Entity\PropertySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -24,9 +25,16 @@ class PropertiesRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
-    public function PaginatedAll(int $page): PaginationInterface
+    public function PaginatedAll(PropertySearch $propertySearch, int $page = 1): PaginationInterface
     {
         $query = $this->createQueryBuilder('p');
+        if (!is_null($propertySearch->getIstop())) {
+            if ($propertySearch->getIstop()) {
+                $query = $query->andWhere('p.istop = 1');
+            } else {
+                $query = $query->andWhere('p.istop = 0');
+            }
+        }
         $pagination = $this->paginator->paginate(
             $query,
             $page
