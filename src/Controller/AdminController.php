@@ -12,6 +12,8 @@ use App\Repository\MessagesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
 use DateTime;
+use Presta\ImageBundle\Form\Type\ImageType;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,8 +62,9 @@ class AdminController extends AbstractController
     {
         $properties = new Properties();
         $form = $this->createForm(PropertiesType::class, $properties);
-
+        // $form2 = $this->createForm(ImageType::class);
         $form->handleRequest($request);
+        //        $form2->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$data` variable has also been updated
@@ -77,6 +80,7 @@ class AdminController extends AbstractController
         return $this->render('admin/properties.add.html.twig', [
             'controller_name' => 'AdminController',
             'form' => $form->createView(),
+            // 'form2' => $form2->createView(),
         ]);
     }
 
@@ -247,9 +251,9 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/mails/view/{id}", name="adminmailsview")
      */
-    public function mailsview(Request $request,int $id,MessagesRepository $messagesRepository)
+    public function mailsview(Request $request, int $id, MessagesRepository $messagesRepository)
     {
-        $mail = $messagesRepository->findOneBy(['id'=>$id]);
+        $mail = $messagesRepository->findOneBy(['id' => $id]);
         $form = $this->createForm(MailType::class, $mail);
         $form->handleRequest($request);
         $mail->setIsread(true);

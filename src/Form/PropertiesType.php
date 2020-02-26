@@ -8,9 +8,11 @@ use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PropertiesType extends AbstractType
 {
@@ -31,9 +33,9 @@ class PropertiesType extends AbstractType
             ->add('livingspace', null, ['label' => 'Superficie :'])
             ->add('rooms', null, ['label' => 'Nombre de pièces :'])
             ->add('bedrooms', null, ['label' => 'Nombre de chambres :'])
-            ->add('isvisible',null,['label'=> 'Est Visible ?'])
-            ->add('istop',null,['label'=> 'Est une offre Top ?'])
-            ->add('ref',null,['label'=> 'Référence :'])
+            ->add('isvisible', null, ['label' => 'Est Visible ?'])
+            ->add('istop', null, ['label' => 'Est une offre Top ?'])
+            ->add('ref', null, ['label' => 'Référence :'])
             ->add('idaddress', AddressType::class)
             ->add('idpropertytype', EntityType::class, ['label' => 'Type de Bien :', 'class' => Propertytypes::class, 'choice_label' => 'label'])
             ->add('iduser', EntityType::class, [
@@ -43,7 +45,20 @@ class PropertiesType extends AbstractType
                     return $user->getEmail() . " - " . $user->getLastName() . " " . $user->getFirstName();
                 }
             ])
-            // ->add('deleted',null,['label'=>'Est inactif ?'])
+            ->add('images',CollectionType::class,[
+
+            ])
+            // -> add('image1', VichImageType::class,
+            //     [
+            //         'mapped' => false,
+            //         'required' => false,
+            //         'allow_delete' => true,
+            //         'download_label' => 'downloadlabel',
+            //         'download_uri' => true,
+            //         'image_uri' => true,
+            //         'asset_helper' => true,
+            //     ]
+            // )
             ->add('submit', SubmitType::class, ['label' => 'Ajouter le bien']);
     }
 

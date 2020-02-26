@@ -44,17 +44,17 @@ class Messages
     private $isread = '0';
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="Created_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
     * @Gedmo\Timestampable(on="create")
     */
     private $createdAt = null;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="Updated_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
     * @Gedmo\Timestampable(on="update")
     */
     private $updatedAt = null;
@@ -67,9 +67,9 @@ class Messages
     private $deletedAt = null;
 
     /**
-     * @var bool|null
+     * @var bool
      *
-     * @ORM\Column(name="Deleted", type="boolean", nullable=true)
+     * @ORM\Column(name="Deleted", type="boolean", nullable=false, options={"default"="0"})
      */
     private $deleted = '0';
 

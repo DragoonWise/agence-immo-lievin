@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Pictures
  *
- * @ORM\Table(name="pictures", indexes={@ORM\Index(name="FK_Pictures_Property", columns={"IdProperty"})})
+ * @ORM\Table(name="pictures")
  * @ORM\Entity(repositoryClass="App\Repository\PicturesRepository")
+ * @Vich\Uploadable
  */
 class Pictures
 {
@@ -25,44 +28,31 @@ class Pictures
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Label", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="FileName", type="string", length=255, nullable=false, options={"default"="empty.jpg"})
      */
-    private $label = null;
+    private $filename = null;
 
     /**
-     * @var \DateTime|null
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @Vich\UploadableField(mapping="propertyimage", fileNameProperty="filename")
+     *
+     * @var File|null
+     */
+    private $imageFile;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Created_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt = null;
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-     * @Gedmo\Timestampable(on="update")
-     */
-    private $updatedAt = null;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="Deleted_at", type="datetime", nullable=true, options={"default"="NULL"})
-     */
-    private $deletedAt = null;
-
-    /**
-     * @var bool|null
-     *
-     * @ORM\Column(name="Deleted", type="boolean", nullable=true)
-     */
-    private $deleted = '0';
-
-    /**
      * @var \Properties
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Properties", inversedBy="Images")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Properties", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
     private $idproperty;
@@ -72,14 +62,14 @@ class Pictures
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    public function getFileName(): ?string
     {
-        return $this->label;
+        return $this->filename;
     }
 
-    public function setLabel(?string $label): self
+    public function setFileName(?string $filename): self
     {
-        $this->label = $label;
+        $this->filename = $filename;
 
         return $this;
     }
@@ -96,42 +86,6 @@ class Pictures
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getDeletedAt(): ?\DateTimeInterface
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    public function getDeleted(): ?bool
-    {
-        return $this->deleted;
-    }
-
-    public function setDeleted(?bool $deleted): self
-    {
-        $this->deleted = $deleted;
-
-        return $this;
-    }
-
     public function getIdproperty(): ?Properties
     {
         return $this->idproperty;
@@ -142,5 +96,30 @@ class Pictures
         $this->idproperty = $idproperty;
 
         return $this;
+    }
+
+     /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

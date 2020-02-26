@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Properties
@@ -13,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="properties", indexes={@ORM\Index(name="FK_Properties_User", columns={"IdUser"}), @ORM\Index(name="FK_Properties_Address", columns={"IdAddress"}), @ORM\Index(name="FK_Properties_PropertyType", columns={"IdPropertyType"})})
  * @ORM\Entity(repositoryClass="App\Repository\PropertiesRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
+ * @Vich\Uploadable
  */
 class Properties
 {
@@ -84,36 +86,36 @@ class Properties
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="IsVisible", type="boolean", nullable=true)
+     * @ORM\Column(name="IsVisible", type="boolean", nullable=false,options={"default"="0"})
      */
     private $isvisible = '0';
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="IsTop", type="boolean", nullable=true)
+     * @ORM\Column(name="IsTop", type="boolean", nullable=false,options={"default"="0"})
      */
     private $istop = '0';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Ref", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Ref", type="string", length=50, nullable=false)
      */
     private $ref = null;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="Created_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
-      * @Gedmo\Timestampable(on="create")
-    */
+     * @ORM\Column(name="Created_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @Gedmo\Timestampable(on="create")
+     */
     private $createdAt = null;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="Updated_at", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="Updated_at", type="datetime", nullable=false, options={"default"="current_timestamp()"})
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt = null;
@@ -126,9 +128,9 @@ class Properties
     private $deletedAt = null;
 
     /**
-     * @var bool|null
+     * @var bool
      *
-     * @ORM\Column(name="Deleted", type="boolean", nullable=true)
+     * @ORM\Column(name="Deleted", type="boolean", nullable=false, options={"default"="0"})
      */
     private $deleted = '0';
 
@@ -163,13 +165,15 @@ class Properties
     private $iduser;
 
     /**
+     * @var Collection|\Pictures[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="idproperty")
      */
-    private $Images;
+    private $images;
 
     public function __construct()
     {
-        $this->Images = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,13 +402,13 @@ class Properties
      */
     public function getImages(): Collection
     {
-        return $this->Images;
+        return $this->images;
     }
 
     public function addImage(Pictures $image): self
     {
-        if (!$this->Images->contains($image)) {
-            $this->Images[] = $image;
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
             $image->setIdProperty($this);
         }
 
@@ -413,8 +417,8 @@ class Properties
 
     public function removeImage(Pictures $image): self
     {
-        if ($this->Images->contains($image)) {
-            $this->Images->removeElement($image);
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
             // set the owning side to null (unless already changed)
             if ($image->getIdProperty() === $this) {
                 $image->setIdProperty(null);
@@ -423,6 +427,4 @@ class Properties
 
         return $this;
     }
-
-
 }
