@@ -44,11 +44,11 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/properties", name="adminproperties")
+     * @Route("/admin/properties/{page}", name="adminproperties")
      */
-    public function properties()
+    public function properties(int $page = 1)
     {
-        $properties = $this->_propertiesRepository->findAll();
+        $properties = $this->_propertiesRepository->PaginatedAll($page);
         return $this->render('admin/properties.html.twig', [
             'controller_name' => 'AdminController',
             'properties' => $properties,

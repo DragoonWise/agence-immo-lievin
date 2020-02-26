@@ -2,7 +2,7 @@
 
 {% block container %}
 <div class="text-center">
-    <h1>Listes des biens</h1>
+    <h1>Listes des biens ({{ properties.getTotalItemCount }})</h1>
     <table class='table table-striped'>
         <thead>
             <tr>
@@ -29,6 +29,7 @@
     </table>
     <div>
         <a class='btn btn-primary' href="{{path('adminpropertiesadd')}}">Ajouter un bien</a>
+        {{ knp_pagination_render(properties) }}
     </div>
 </div>
 {% endblock %}

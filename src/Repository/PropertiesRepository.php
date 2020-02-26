@@ -5,7 +5,8 @@ namespace App\Repository;
 use App\Entity\Properties;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Knp\Bundle\PaginatorBundle;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @method Properties|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,21 +16,23 @@ use Knp\Bundle\PaginatorBundle;
  */
 class PropertiesRepository extends ServiceEntityRepository
 {
-private $paginator;
+    private $paginator;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Properties::class);
-        // $this->paginator = $paginator;
+        $this->paginator = $paginator;
     }
 
-    // public function PaginatedAll(int $page) : Pagination
-    // {
-    //     $pagination = $this->paginator->paginate(
-    //         $this->createQueryBuilder('p'),
-    //         $page
-    //     );
-    // }
+    public function PaginatedAll(int $page): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('p');
+        $pagination = $this->paginator->paginate(
+            $query,
+            $page
+        );
+        return $pagination;
+    }
 
     public function reactivate(int $id)
     {
