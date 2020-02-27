@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Ramsey\Uuid\Uuid;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -168,7 +169,7 @@ class Properties
     /**
      * @var Collection|\Pictures[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="idproperty")
+     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="idproperty",cascade={"persist"})
      */
     private $images;
 
@@ -431,8 +432,23 @@ class Properties
 
     public function setImage1($d):self
     {
-        var_dump($d);
-        exit;
+        // var_dump($d);
+        // exit;
+        $tmp = $this->getImage1();
+        if (!is_null($tmp) && ($tmp->imagename != $d->originalName))
+        {
+            $this->removeImage($tmp);
+        }
+        if (is_null($tmp))
+        {
+            $filename = $this->id . '_' . Uuid::uuid4()->toString();
+            move_uploaded_file($d->getfileName(), "build/images/$filename");
+            // download image puis stock le nouveau nom dans $filename
+            $picture = new Pictures();
+            $picture->setImageName($filename);
+            $picture->setidproperty($this); // Id non affecté pour les nouveaux biens
+            $this->addImage($picture);
+        }
         return $this;
     }
 

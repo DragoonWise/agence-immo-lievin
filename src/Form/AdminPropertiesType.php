@@ -44,20 +44,6 @@ class AdminPropertiesType extends AbstractType
                     return $user->getEmail() . " - " . $user->getLastName() . " " . $user->getFirstName();
                 }
             ])
-            ->add('images',CollectionType::class,[
-
-            ])
-            // -> add('image1', VichImageType::class,
-            //     [
-            //         'mapped' => false,
-            //         'required' => false,
-            //         'allow_delete' => true,
-            //         'download_label' => 'downloadlabel',
-            //         'download_uri' => true,
-            //         'image_uri' => true,
-            //         'asset_helper' => true,
-            //     ]
-            // )
             ->add('submit', SubmitType::class, ['label' => 'Ajouter le bien']);
     }
 

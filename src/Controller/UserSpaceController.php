@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Messages;
 use App\Entity\Pictures;
-use App\Entity\PicturesSimplified;
+use App\Entity\Addresses;
 use App\Entity\Properties;
 use App\Form\MailType;
 use App\Form\PropertiesType;
@@ -33,6 +33,12 @@ class UserSpaceController extends AbstractController
             $data = $form->getData();
             $data->setiduser($this->getUser());
             $data->setref(substr($data->getidpropertytype()->getlabel(), 0, 2));
+            $address = new Addresses();
+            $address->setCity($form->get('city')->getData());
+            $data->setidaddress($address);
+            // var_dump($form->get('city')->getData());
+            // var_dump($form);
+            // exit;
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);

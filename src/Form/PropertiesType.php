@@ -31,7 +31,7 @@ class PropertiesType extends AbstractType
             ->add('livingspace', null, ['label' => 'Superficie :'])
             ->add('rooms', null, ['label' => 'Nombre de pièces :'])
             ->add('bedrooms', null, ['label' => 'Nombre de chambres :'])
-            ->add('city', TextType::class, ['mapped' => false, 'label' => 'Ville :'])
+            ->add('city', TextType::class, ['mapped'=>false,'label' => 'Ville :'])
             ->add('idpropertytype', EntityType::class, ['label' => 'Type de Bien :', 'class' => Propertytypes::class, 'choice_label' => 'label'])
             ->add('image1',FileType::class,['label_attr'=>['class'=>'d-none'],'required'=>true])
             ->add('image2',FileType::class,['label_attr'=>['class'=>'d-none'],'required'=>false])
