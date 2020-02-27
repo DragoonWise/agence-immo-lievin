@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -427,4 +428,47 @@ class Properties
 
         return $this;
     }
+
+    public function setImage1($d):self
+    {
+        var_dump($d);
+        exit;
+        return $this;
+    }
+
+    public function getImage1() : ?File
+    {
+        if (count($this->images)>0)
+            return $this->images[0];
+            // var_dump(new Pictures);
+        return null;
+    }
+
+    public function setImage2($d):self
+    {
+        return $this;
+    }
+
+    public function getImage2() : ?File
+    {
+        if (count($this->images)>1)
+            return $this->images[1];
+            // var_dump(new Pictures);
+        return null;
+    }
+
+    public function setImage3($d):self
+    {
+        return $this;
+    }
+
+    public function getImage3() : ?File
+    {
+        if (count($this->images)>2)
+            return $this->images[2];
+            // var_dump(new Pictures);
+        return null;
+    }
+
+
 }

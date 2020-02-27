@@ -1,2 +1,18 @@
 // assets/css/app.scss
 @import "~bootstrap/scss/bootstrap";
+@import "../FontAwesome/css/fontawesome.css";
+@import "../FontAwesome/css/solid.css";
+@import '../bootstrap-fileinput/css/fileinput.min.css';
+
+
+.height-thumb {
+  height: 90px;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

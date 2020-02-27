@@ -28,14 +28,14 @@ class Pictures
     /**
      * @var string|null
      *
-     * @ORM\Column(name="FileName", type="string", length=255, nullable=false, options={"default"="empty.jpg"})
+     * @ORM\Column(name="ImageName", type="string", length=255, nullable=false, options={"default"="empty.jpg"})
      */
-    private $filename = null;
+    private $imageName = null;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="propertyimage", fileNameProperty="filename")
+     * @Vich\UploadableField(mapping="propertyimage", fileNameProperty="imageName")
      *
      * @var File|null
      */
@@ -62,18 +62,6 @@ class Pictures
         return $this->id;
     }
 
-    public function getFileName(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFileName(?string $filename): self
-    {
-        $this->filename = $filename;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -98,7 +86,7 @@ class Pictures
         return $this;
     }
 
-     /**
+      /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -122,4 +110,15 @@ class Pictures
     {
         return $this->imageFile;
     }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
 }

@@ -1,6 +1,7 @@
 {% extends 'home/base.html.twig' %}
 
 {% block content %}
+
 {{ form_start(form, {'method': 'POST'}) }}
 {{ form_errors(form) }}
 {{ form_row(form.label) }}
@@ -18,7 +19,19 @@
     <div class="col-12 col-md-4">{{ form_row(form.bedrooms) }}</div>
 </div>
 {{ form_row(form.description) }}
-
-{{ form_row(form.submit, { 'label': 'Ajouter le bien' }) }}
+<div class="row  pt-2">
+    <div class="col-4">
+        {{ form_row(form.image1) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.image2) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.image3) }}
+    </div>
+</div>
+<div class="row">
+    {{ form_row(form.submit, { 'label': 'Ajouter le bien' }) }}
+</div>
 {{ form_end(form) }}
 {% endblock %}

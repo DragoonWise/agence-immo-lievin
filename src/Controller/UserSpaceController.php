@@ -3,15 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Messages;
+use App\Entity\Pictures;
+use App\Entity\PicturesSimplified;
 use App\Entity\Properties;
 use App\Form\MailType;
 use App\Form\PropertiesType;
+use App\Form\PropertyPictureType;
 use App\Form\UsersType;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 class UserSpaceController extends AbstractController
 {
@@ -21,7 +25,7 @@ class UserSpaceController extends AbstractController
     public function propose(Request $request)
     {
         $properties = new Properties();
-        $form = $this->createForm(PropertiesType::class, $properties);
+        $form = $this->createForm(PropertiesType::class, $properties,['allow_extra_fields'=>true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
@@ -36,6 +40,7 @@ class UserSpaceController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
+        // var_dump($_FILES);
 
         return $this->render('userspace/propose.html.twig', [
             'controller_name' => 'UserSpaceController',
@@ -79,7 +84,7 @@ class UserSpaceController extends AbstractController
     /**
      * @Route("/user/mail", name="sendmail")
      */
-    public function sendmail(Request $request,PropertiesRepository $propertiesRepository,UsersRepository $usersRepository)
+    public function sendmail(Request $request, PropertiesRepository $propertiesRepository, UsersRepository $usersRepository)
     {
         $mail = new Messages;
         // $user = $usersRepository->findOneBy(['id'=>$this->getUser()]);

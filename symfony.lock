@@ -117,6 +117,9 @@
     "jms/metadata": {
         "version": "2.1.0"
     },
+    "kartik-v/bootstrap-fileinput": {
+        "version": "v5.0.8"
+    },
     "knplabs/knp-components": {
         "version": "v2.3.3"
     },

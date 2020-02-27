@@ -13,15 +13,24 @@ import $ from "jquery";
 
 require("bootstrap");
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
+import "../bootstrap-fileinput/js/fileinput.js";
 $(function() {
   $("#exportform").submit(function(e) {
-      e.preventDefault();
-      // Export du fichier
-
+    e.preventDefault();
+    // Export du fichier
   });
   $("#importform").submit(function(e) {
     e.preventDefault();
     // importanalyse
-});
+  });
+  $(":file").fileinput({
+    uploadAsync: false,
+    maxFileCount: 1
+  });
+  $(":file").change(function(e) {
+    if (e.target.baseURI == "http://agence-immo-lievin.fr/user/propose") {
+      console.log(e.target);
+    }
+  });
+  $(".custom-file-label").remove();
 });
