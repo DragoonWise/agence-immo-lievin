@@ -2,13 +2,10 @@
 
 namespace App\Entity;
 
-use Ramsey\Uuid\Uuid;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Properties
@@ -16,7 +13,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Table(name="properties", indexes={@ORM\Index(name="FK_Properties_User", columns={"IdUser"}), @ORM\Index(name="FK_Properties_Address", columns={"IdAddress"}), @ORM\Index(name="FK_Properties_PropertyType", columns={"IdPropertyType"})})
  * @ORM\Entity(repositoryClass="App\Repository\PropertiesRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false, hardDelete=true)
- * @Vich\Uploadable
  */
 class Properties
 {
@@ -165,13 +161,6 @@ class Properties
      * })
      */
     private $iduser;
-
-    /**
-     * @var Collection|\Pictures[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="idproperty",cascade={"persist"})
-     */
-    private $images;
 
     public function __construct()
     {
@@ -399,92 +388,64 @@ class Properties
         return $this;
     }
 
-    /**
-     * @return Collection|Pictures[]
-     */
-    public function getImages(): Collection
+    private $image1;
+    private $image2;
+    private $image3;
+
+    public function setImage1($d): self
     {
-        return $this->images;
+        $this->image1 = $d;
+        return $this;
     }
 
-    public function addImage(Pictures $image): self
+    public function getImageName1()
     {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setIdProperty($this);
+        if (is_null($this->getImage1())) {
+            return 'empty.jpg';
         }
-
-        return $this;
+        return $this->image1->getImageName();
     }
 
-    public function removeImage(Pictures $image): self
+    public function getImageName2()
     {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
-            if ($image->getIdProperty() === $this) {
-                $image->setIdProperty(null);
-            }
+        if (is_null($this->getImage2())) {
+            return null;
         }
-
-        return $this;
+        return $this->image2->getImageName();
     }
 
-    public function setImage1($d):self
+    public function getImageName3()
     {
-        // var_dump($d);
-        // exit;
-        $tmp = $this->getImage1();
-        if (!is_null($tmp) && ($tmp->imagename != $d->originalName))
-        {
-            $this->removeImage($tmp);
+        if (is_null($this->getImage3())) {
+            return null;
         }
-        if (is_null($tmp))
-        {
-            $filename = $this->id . '_' . Uuid::uuid4()->toString();
-            move_uploaded_file($d->getfileName(), "build/images/$filename");
-            // download image puis stock le nouveau nom dans $filename
-            $picture = new Pictures();
-            $picture->setImageName($filename);
-            $picture->setidproperty($this); // Id non affecté pour les nouveaux biens
-            $this->addImage($picture);
-        }
+        return $this->image3->getImageName();
+    }
+
+    public function getImage1()
+    {
+        return $this->image1;
+    }
+
+    public function setImage2($d): self
+    {
+        $this->image2 = $d;
         return $this;
     }
 
-    public function getImage1() : ?File
+    public function getImage2()
     {
-        if (count($this->images)>0)
-            return $this->images[0];
-            // var_dump(new Pictures);
-        return null;
+        return $this->image2;
     }
 
-    public function setImage2($d):self
+    public function setImage3($d): self
     {
+        $this->image3 = $d;
         return $this;
     }
 
-    public function getImage2() : ?File
+    public function getImage3()
     {
-        if (count($this->images)>1)
-            return $this->images[1];
-            // var_dump(new Pictures);
-        return null;
+        return $this->image3;
     }
-
-    public function setImage3($d):self
-    {
-        return $this;
-    }
-
-    public function getImage3() : ?File
-    {
-        if (count($this->images)>2)
-            return $this->images[2];
-            // var_dump(new Pictures);
-        return null;
-    }
-
-
 }

@@ -8,7 +8,7 @@ use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,6 +44,9 @@ class AdminPropertiesType extends AbstractType
                     return $user->getEmail() . " - " . $user->getLastName() . " " . $user->getFirstName();
                 }
             ])
+            ->add('image1',FileType::class,['label_attr'=>['class'=>'d-none'],'required'=>true,'data_class'=>null])
+            ->add('image2',FileType::class,['label_attr'=>['class'=>'d-none'],'required'=>false,'data_class'=>null])
+            ->add('image3',FileType::class,['label_attr'=>['class'=>'d-none'],'required'=>false,'data_class'=>null])
             ->add('submit', SubmitType::class, ['label' => 'Ajouter le bien']);
     }
 

@@ -8,24 +8,23 @@ use App\Entity\Addresses;
 use App\Entity\Properties;
 use App\Form\MailType;
 use App\Form\PropertiesType;
-use App\Form\PropertyPictureType;
 use App\Form\UsersType;
+use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Vich\UploaderBundle\Handler\DownloadHandler;
 
 class UserSpaceController extends AbstractController
 {
     /**
      * @Route("/user/propose", name="userpropose")
      */
-    public function propose(Request $request)
+    public function propose(Request $request, PicturesRepository $picturesRepository)
     {
         $properties = new Properties();
-        $form = $this->createForm(PropertiesType::class, $properties,['allow_extra_fields'=>true]);
+        $form = $this->createForm(PropertiesType::class, $properties, ['allow_extra_fields' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
@@ -36,13 +35,36 @@ class UserSpaceController extends AbstractController
             $address = new Addresses();
             $address->setCity($form->get('city')->getData());
             $data->setidaddress($address);
-            // var_dump($form->get('city')->getData());
-            // var_dump($form);
-            // exit;
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
+            // ... manage Pictures of property
+            // Proposer un bien donc pas d'images existantes
+            $picture1 = $picturesRepository->createPictureByFile($data->getImage1(), $data);
+            $picture2 = $picturesRepository->createPictureByFile($data->getImage2(), $data);
+            $picture3 = $picturesRepository->createPictureByFile($data->getImage3(), $data);
+            $entityManager->persist($picture1);
+            if (!is_null($picture2))
+                $entityManager->persist($picture2);
+            if (!is_null($picture3))
+                $entityManager->persist($picture3);
+            $entityManager->flush();
+
+            // $images = $picturesRepository->findAllByPropertyId($data->getId());
+            // $imagesbynames = [];
+            // $imagesfinal= [];
+            // array_walk($images, function ($val, $key) {
+            //     $imagesbynames[$val->originalname] = $val;
+            // });
+            // if (array_key_exists($data->getimage1(), $imagesbynames)) {
+            //     $imagesfinal[] = $imagesbynames[$data->getimage1()];
+            // }
+            // else
+            // {
+
+            // }
+
 
             return $this->redirectToRoute('home');
         }

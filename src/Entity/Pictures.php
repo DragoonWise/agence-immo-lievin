@@ -4,12 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Pictures
  *
- * @ORM\Table(name="pictures")
+ * @ORM\Table(name="pictures", indexes={@ORM\Index(name="FK_Pictures_Property", columns={"IdProperty"})})
  * @ORM\Entity(repositoryClass="App\Repository\PicturesRepository")
  */
 class Pictures
@@ -41,8 +40,10 @@ class Pictures
     /**
      * @var \Properties
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Properties", inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Properties")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="IdProperty", referencedColumnName="Id")
+     * })
      */
     private $idproperty;
 
@@ -84,5 +85,4 @@ class Pictures
     {
         return $this->imageName;
     }
-
 }

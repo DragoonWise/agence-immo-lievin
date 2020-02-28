@@ -3,16 +3,16 @@
 {% block  content %}
 <div class="row mt-2">
     <div class="col-4">
-        <img src="{{ asset('build/images/empty.jpg') | imagine_filter('view') }}" alt="" class="img-fluid">
+        <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}" alt="" class="img-fluid">
         <div class="row m-1">
             <div class="col-4">
-                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+                <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('thumb') }}" alt="" class="img-fluid">
             </div>
             <div class="col-4">
-                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+                <img src="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('thumb') }}" alt="" class="img-fluid">
             </div>
             <div class="col-4">
-                <img src="{{ asset('build/images/empty.jpg') | imagine_filter('thumb') }}" alt="" class="img-fluid">
+                <img src="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('thumb') }}" alt="" class="img-fluid">
             </div>
         </div>
     </div>

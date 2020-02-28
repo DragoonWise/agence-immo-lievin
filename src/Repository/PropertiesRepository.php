@@ -35,6 +35,7 @@ class PropertiesRepository extends ServiceEntityRepository
                 $query = $query->andWhere('p.istop = 0');
             }
         }
+        $query = $query->andWhere('p.deleted = 0');
         $pagination = $this->paginator->paginate(
             $query,
             $page

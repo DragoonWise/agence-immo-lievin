@@ -10,9 +10,11 @@ use App\Form\MailType;
 use App\Form\UsersType;
 use App\Repository\CountriesRepository;
 use App\Repository\MessagesRepository;
+use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,13 +24,14 @@ class AdminController extends AbstractController
 
     private $_propertiesRepository;
     private $_usersRepository;
-    private $_countriesRepository;
 
-    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository, CountriesRepository $countriesRepository)
+
+    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository,PicturesRepository $picturesRepository)
     {
         $this->_propertiesRepository = $propertiesRepository;
         $this->_usersRepository = $usersRepository;
-        $this->_countriesRepository = $countriesRepository;
+        $this->_picturesRepository = $picturesRepository;
+
     }
 
     /**
@@ -88,8 +91,24 @@ class AdminController extends AbstractController
      */
     public function propertiesedit(Request $request, int $id)
     {
-        $properties = $this->_propertiesRepository->findOneBy(['id' => $id]);
-        $form = $this->createForm(AdminPropertiesType::class, $properties);
+        $property = $this->_propertiesRepository->findOneBy(['id' => $id]);
+        // Populate Picture
+        $pictures = $this->_picturesRepository->findAllByPropertyId($property->getid());
+        foreach ($pictures as $key => $val) {
+            switch($key)
+            {
+                case 0:
+                    $property->setimage1($val);
+                break;
+                case 1:
+                    $property->setimage2($val);
+                break;
+                case 2:
+                    $property->setimage3($val);
+                break;
+            }
+        }
+        $form = $this->createForm(AdminPropertiesType::class, $property);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
