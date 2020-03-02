@@ -168,9 +168,9 @@ class UserSpaceController extends AbstractController
                 $entityManager->remove($favorite);
             }
             $entityManager->flush();
-            return new Response('OK');
+            return new Response("OK $idproperty");
         } catch (\Throwable $th) {
-            return new Response('KO');
+            return new Response("KO $idproperty");
         }
     }
 

@@ -23,13 +23,22 @@ $(function() {
     e.preventDefault();
     // importanalyse
   });
-  $(".favoriteform").submit(function(e){
+  $(".favoriteform").submit(function(e) {
     e.preventDefault();
-    $.post("/user/toggleFavorite/" + e.target.propertyid.value,function($data){
-      if($data == 'OK'){
-        // $("btn-favorite-"+$data)
+    $.post("/user/toggleFavorite/" + e.target.propertyid.value).done(function(
+      $data
+    ) {
+      if ($data.startsWith("OK")) {
+        var $button = $("#btn-favorite-" + $data.substr(3).trim());
+        if ($button.hasClass("text-warning")) {
+          $button.removeClass("text-warning");
+          $button.addClass("text-dark");
+        } else {
+          $button.addClass("text-warning");
+          $button.removeClass("text-dark");
+        }
       }
-    })
+    });
   });
   $(":file").fileinput({
     uploadAsync: false,
@@ -41,9 +50,12 @@ $(function() {
     }
   });
   $(".custom-file-label").remove();
-  $(".carousel-inner").children().first().addClass('active');
+  $(".carousel-inner")
+    .children()
+    .first()
+    .addClass("active");
   $("#carousel").carousel();
-  $(".imagemini").hover(function(e){
-    $('#imagemain').attr('src', e.target.getAttribute('srcview'));
+  $(".imagemini").hover(function(e) {
+    $("#imagemain").attr("src", e.target.getAttribute("srcview"));
   });
 });
