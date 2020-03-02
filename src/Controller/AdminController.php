@@ -26,12 +26,11 @@ class AdminController extends AbstractController
     private $_usersRepository;
 
 
-    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository,PicturesRepository $picturesRepository)
+    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository, PicturesRepository $picturesRepository)
     {
         $this->_propertiesRepository = $propertiesRepository;
         $this->_usersRepository = $usersRepository;
         $this->_picturesRepository = $picturesRepository;
-
     }
 
     /**
@@ -50,7 +49,7 @@ class AdminController extends AbstractController
     public function properties(int $page = 1)
     {
         $search = new PropertySearch;
-        $properties = $this->_propertiesRepository->PaginatedAll($search,$page);
+        $properties = $this->_propertiesRepository->PaginatedAll($search, $page, true);
         return $this->render('admin/properties.html.twig', [
             'controller_name' => 'AdminController',
             'properties' => $properties,
@@ -94,22 +93,26 @@ class AdminController extends AbstractController
         $property = $this->_propertiesRepository->findOneBy(['id' => $id]);
         // Populate Picture
         $pictures = $this->_picturesRepository->findAllByPropertyId($property->getid());
+        $image1 = null;
+        $image2 = null;
+        $image3 = null;
         foreach ($pictures as $key => $val) {
-            switch($key)
-            {
+            switch ($key) {
                 case 0:
                     $property->setimage1($val);
-                break;
+                    $image1 = $val;
+                    break;
                 case 1:
                     $property->setimage2($val);
-                break;
+                    $image2 = $val;
+                    break;
                 case 2:
                     $property->setimage3($val);
-                break;
+                    $image3 = $val;
+                    break;
             }
         }
         $form = $this->createForm(AdminPropertiesType::class, $property);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
@@ -119,13 +122,34 @@ class AdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
             $entityManager->flush();
-
+            // ... manage Pictures of property
+            // Proposer un bien donc pas d'images existantes
+            $picture1 = $this->_picturesRepository->createPictureByFile($data->getImage1(), $data) ?? $image1;
+            $picture2 = $this->_picturesRepository->createPictureByFile($data->getImage2(), $data) ?? $image2;
+            $picture3 = $this->_picturesRepository->createPictureByFile($data->getImage3(), $data) ?? $image3;
+            if (!is_null($image1) && ($picture1 != $image1 || $request->request->get('imagename1') == ''))
+                $entityManager->remove($image1);
+            $entityManager->persist($picture1);
+            if (!is_null($picture2)) {
+                if (!is_null($image2) && ($picture2 != $image2 || $request->request->get('imagename2') == ''))
+                    $entityManager->remove($image2);
+                $entityManager->persist($picture2);
+            }
+            if (!is_null($picture3)) {
+                if (!is_null($image3) && ($picture3 != $image3 || $request->request->get('imagename3') == ''))
+                    $entityManager->remove($image3);
+                $entityManager->persist($picture3);
+            }
+            $entityManager->flush();
             return $this->redirectToRoute('adminproperties');
         }
 
         return $this->render('admin/properties.edit.html.twig', [
             'controller_name' => 'AdminController',
             'form' => $form->createView(),
+            'imagename1' => $property->getImageName1(),
+            'imagename2' => $property->getImageName2(),
+            'imagename3' => $property->getImageName3(),
         ]);
     }
 

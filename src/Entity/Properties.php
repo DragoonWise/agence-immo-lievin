@@ -448,4 +448,17 @@ class Properties
     {
         return $this->image3;
     }
+
+    private $isfavorite;
+
+    public function getisfavorite()
+    {
+        return $this->isfavorite;
+    }
+
+    public function setisfavorite($isfavorite)
+    {
+        $this->isfavorite = $isfavorite;
+        return $this;
+    }
 }

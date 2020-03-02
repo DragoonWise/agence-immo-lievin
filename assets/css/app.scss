@@ -2,8 +2,7 @@
 @import "~bootstrap/scss/bootstrap";
 @import "../FontAwesome/css/fontawesome.css";
 @import "../FontAwesome/css/solid.css";
-@import '../bootstrap-fileinput/css/fileinput.min.css';
-
+@import "../bootstrap-fileinput/css/fileinput.min.css";
 
 .height-thumb {
   height: 90px;
@@ -15,4 +14,11 @@
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+.icon-top-right {
+  width: 2em;
+  position: absolute;
+  top: 5px;
+  right: 25px;
 }

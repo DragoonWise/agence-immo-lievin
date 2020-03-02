@@ -3,22 +3,32 @@
 {% block  content %}
 <div class="row mt-2">
     <div class="col-4">
-        <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}" alt="" class="img-fluid">
+        <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}" alt="" class="img-fluid" id="imagemain">
         <div class="row m-1">
             <div class="col-4">
-                <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('thumb') }}" alt="" class="img-fluid">
+                <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('thumb') }}" alt=""
+                srcview="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}"
+                    class="img-fluid imagemini">
             </div>
             <div class="col-4">
-                <img src="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('thumb') }}" alt="" class="img-fluid">
-            </div>
+                {% if property.imagename2 %}
+                <img src="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('thumb') }}" alt=""
+                srcview="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('view') }}"
+                    class="img-fluid imagemini">
+                    {% endif %}
+                </div>
             <div class="col-4">
-                <img src="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('thumb') }}" alt="" class="img-fluid">
+                {% if property.imagename3 %}
+                <img src="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('thumb') }}" alt=""
+                srcview="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('view') }}"
+                    class="img-fluid imagemini">
+                {% endif %}
             </div>
         </div>
     </div>
     <div class="col-8">
         <h1>{{property.label}}</h1>
-        <p>
+        <div>
             <b>{% if property.isrental %}
                 Location
                 {% else %}
@@ -32,7 +42,7 @@
             <b>Classe énergétique :</b> {{ property.energyclass }}<br>
             <b>Description :</b><br>
             <p>{{ property.description }}</p>
-        </p>
+        </div>
         <form action="{{ path('sendmail') }}" method="post">
             <input type="hidden" name="idproperty" value="{{ property.id }}">
             <button class="btn btn-primary" type="submit">Nous contacter concernant ce bien</button>

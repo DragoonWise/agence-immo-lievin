@@ -1,8 +1,10 @@
 {% if app.user %}
 <div class="col-12 col-md-2">
-    <ul class="list-unstyled mt-5">
+    <ul class="list-unstyled mt-5 d-flex d-md-block  justify-content-center">
         <li><a href="{{ path('userprofil') }}">Informations Personnelles</a></li>
-        <li>Mes Favoris</li>
+        <span class="d-inline d-md-none">&nbsp;|&nbsp;</span>
+        <li><a href="{{ path('userfavorites') }}">Mes Favoris</a></li>
+        <span class="d-inline d-md-none">&nbsp;|&nbsp;</span>
         <li><a href="{{ path('userpropose') }}">Proposer un bien</a></li>
     </ul>
 </div>

@@ -1,7 +1,17 @@
 {% extends 'home/base.html.twig' %}
 
 {% block content %}
-Carrousel
+<div class="row">
+<div id="carousel" class="carousel slide col-12 col-md-6 offset-md-3" data-ride="carousel">
+    <div class="carousel-inner">
+        {% for picture in picturescarousel %}
+        <div class="carousel-item">
+            <img class="d-block w-100" src="{{ asset('build/images/' ~ picture.imagename) | imagine_filter('carousel') }}" alt="">
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+</div>
 <fieldset class='border'>
     <legend class="w-auto mx-auto">Top Offres</legend>
     <div class="row">

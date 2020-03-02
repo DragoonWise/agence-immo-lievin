@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PropertySearch;
+use App\Repository\FavoritesRepository;
 use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(PropertiesRepository $propertiesRepository, PicturesRepository $picturesRepository)
+    public function index(PropertiesRepository $propertiesRepository, PicturesRepository $picturesRepository, FavoritesRepository $favoritesRepository)
     {
         $search = new PropertySearch();
         $search
@@ -31,10 +32,20 @@ class HomeController extends AbstractController
             $picturespropertyid[$picture->getidproperty()->getid()] = $picture;
         }
         // var_dump($picturespropertyid);
-        foreach ($picturespropertyid as $key => $val) {
-            foreach ($properties->getItems() as &$property) {
-                if (array_key_exists($property->getid(), $picturespropertyid)) {
-                    $property->setimage1($picturespropertyid[$property->getid()]);
+        // foreach ($picturespropertyid as $key => $val) {
+        foreach ($properties->getItems() as &$property) {
+            if (array_key_exists($property->getid(), $picturespropertyid)) {
+                $property->setimage1($picturespropertyid[$property->getid()]);
+            }
+        }
+        // }
+        if ($this->getUser() != null) {
+            $favorites = $favoritesRepository->findAllByUserId($this->getUser()->getid(), $propertiesid);
+            foreach ($favorites as $favorite) {
+                foreach ($properties->getItems() as &$property) {
+                    if ($favorite->getidproperty()->getid() == $property->getid()) {
+                        $property->setisfavorite(true);
+                    }
                 }
             }
         }
@@ -42,6 +53,7 @@ class HomeController extends AbstractController
             'title' => 'Agence Immo Liévin',
             'controller_name' => 'HomeController',
             'properties' => $properties,
+            'picturescarousel' => $pictures,
         ]);
     }
 
@@ -53,17 +65,16 @@ class HomeController extends AbstractController
         $property = $propertiesRepository->findOneBy(['id' => $id]);
         $pictures = $picturesRepository->findAllByPropertyId($property->getid());
         foreach ($pictures as $key => $val) {
-            switch($key)
-            {
+            switch ($key) {
                 case 0:
                     $property->setimage1($val);
-                break;
+                    break;
                 case 1:
                     $property->setimage2($val);
-                break;
+                    break;
                 case 2:
                     $property->setimage3($val);
-                break;
+                    break;
             }
         }
         return $this->render('home/property.view.html.twig', [

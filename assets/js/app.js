@@ -23,6 +23,14 @@ $(function() {
     e.preventDefault();
     // importanalyse
   });
+  $(".favoriteform").submit(function(e){
+    e.preventDefault();
+    $.post("/user/toggleFavorite/" + e.target.propertyid.value,function($data){
+      if($data == 'OK'){
+        // $("btn-favorite-"+$data)
+      }
+    })
+  });
   $(":file").fileinput({
     uploadAsync: false,
     maxFileCount: 1
@@ -33,4 +41,9 @@ $(function() {
     }
   });
   $(".custom-file-label").remove();
+  $(".carousel-inner").children().first().addClass('active');
+  $("#carousel").carousel();
+  $(".imagemini").hover(function(e){
+    $('#imagemain').attr('src', e.target.getAttribute('srcview'));
+  });
 });

@@ -19,6 +19,26 @@ class FavoritesRepository extends ServiceEntityRepository
         parent::__construct($registry, Favorites::class);
     }
 
+    /**
+     * @return Properties[] Returns an array of Properties objects
+     *
+     * @param integer $idproperty
+     * @return Properties[]
+     */
+    public function findAllByUserId(int $iduser, $listidproperty = [])
+    {
+        $query = $this->createQueryBuilder('f')
+            ->andWhere('f.iduser = :id')
+            ->setParameter('id', $iduser);
+        if (count($listidproperty) > 0) {
+            $query = $query
+            ->andWhere('f.idproperty in ('.implode(',',$listidproperty).')');
+        }
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Favorites[] Returns an array of Favorites objects
     //  */

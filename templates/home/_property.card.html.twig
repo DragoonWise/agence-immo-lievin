@@ -1,7 +1,22 @@
 <div class="col-4">
     <div class="card mx-4 mb-4">
+        {% if app.user %}
+        <form class="favoriteform">
+            <input type="hidden" name="propertyid" value='{{ property.id }}'>
+            <input type="hidden" name="userid" value='{{ app.user.id }}'>
+            {% if property.isfavorite %}
+            <button class="icon-top-right text-warning btn" id="btn-favorite-{{ property.id }}">
+                <i class="fa fa-star"></i></button>
+            {% else %}
+            <button class="icon-top-right text-dark btn" id="btn-favorite-{{ property.id }}">
+                <i class=" fa fa-star"></i></button>
+            {% endif %}
+        </form>
+        {% endif %}
         <div class="card-header">
-            <a href="{{ path('propertyview',{id : property.id }) }}"><img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('card') }}" alt="" class='img-fluid'></a>
+            <a href="{{ path('propertyview',{id : property.id }) }}"><img
+                    src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('card') }}" alt=""
+                    class='img-fluid'></a>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ property.label }}</h5>

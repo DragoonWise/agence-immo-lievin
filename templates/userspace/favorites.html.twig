@@ -1,0 +1,11 @@
+{% extends 'home/base.html.twig' %}
+
+{% block content %}
+<h1>Mes Favoris</h1>
+<div class="row">
+    {% for favorite in favorites %}
+    {{ include('home/_property.card.html.twig',{property : favorite.idproperty}) }}
+    {% endfor %}
+    {# {{ knp_pagination_render(favorites) }} #}
+</div>
+{% endblock %}
