@@ -3,19 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Properties;
+use App\Entity\PropertyExport;
 use App\Entity\PropertySearch;
 use App\Entity\Users;
 use App\Form\AdminPropertiesType;
 use App\Form\MailType;
+use App\Form\PropertyExportType;
 use App\Form\UsersType;
-use App\Repository\CountriesRepository;
 use App\Repository\MessagesRepository;
 use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
+use DateTime;
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -24,13 +27,15 @@ class AdminController extends AbstractController
 
     private $_propertiesRepository;
     private $_usersRepository;
+    private $connection;
 
 
-    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository, PicturesRepository $picturesRepository)
+    public function __construct(PropertiesRepository $propertiesRepository, UsersRepository $usersRepository, PicturesRepository $picturesRepository, Connection $connection)
     {
         $this->_propertiesRepository = $propertiesRepository;
         $this->_usersRepository = $usersRepository;
         $this->_picturesRepository = $picturesRepository;
+        $this->connection = $connection;
     }
 
     /**
@@ -59,7 +64,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/properties/add", name="adminpropertiesadd")
      */
-    public function propertiesadd(Request $request,PicturesRepository $picturesRepository)
+    public function propertiesadd(Request $request, PicturesRepository $picturesRepository)
     {
         $properties = new Properties();
         $form = $this->createForm(AdminPropertiesType::class, $properties);
@@ -70,7 +75,7 @@ class AdminController extends AbstractController
             // $form->getData() holds the submitted values
             // but, the original `$data` variable has also been updated
             $data = $form->getData();
-            $data->setref(substr($data->getidpropertytype()->getlabel(), 0, 2).$data->getiduser()->getId());
+            $data->setref(substr($data->getidpropertytype()->getlabel(), 0, 2) . $data->getiduser()->getId());
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
@@ -274,12 +279,55 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/importexport", name="adminimportexport")
      */
-    public function importexport()
+    public function importexport(Request $request)
     {
+        $propertyExport = new PropertyExport();
+        $formExport = $this->createForm(PropertyExportType::class, $propertyExport);
+        // $form2 = $this->createForm(ImageType::class);
+        $formExport->handleRequest($request);
+        //        $form2->handleRequest($request);
+        var_dump($formExport);
+        if ($formExport->isSubmitted() && $formExport->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$data` variable has also been updated
+            $data = $formExport->getData();
+            $this->export($data->getmindate(),$data->getmaxdate());
+        }
         return $this->render('admin/importexport.html.twig', [
             'controller_name' => 'AdminController',
-            'analyse' => null
+            'analyse' => null,
+            'formExport' => $formExport->createView(),
         ]);
+    }
+
+    public function export(DateTime $minDate,DateTime $maxDate)
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function () {
+            $handle = fopen('php://output', 'w+');
+
+            // Add the header of the CSV file
+            fputcsv($handle, array('Name', 'Surname', 'Age', 'Sex'), ';');
+            // Query data from database
+            $results = $this->connection->prepare("Select * From Properties p where p.created_at>=:minDate and p.created_at<=:maxDate");
+            $results->execute([]);
+            // Add the data queried from database
+            while ($row = $results->fetch()) {
+                fputcsv(
+                    $handle, // The file pointer
+                    array($row['name'], $row['surname'], $row['age'], $row['sex']), // The fields
+                    ';' // The delimiter
+                );
+            }
+
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+
+        return $response;
     }
 
     public function importanalyse($filename)

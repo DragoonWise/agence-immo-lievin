@@ -18,7 +18,7 @@ import "../bootstrap-fileinput/js/fileinput.js";
 
 $(function() {
   $("#exportform").submit(function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     // Export du fichier
   });
   $("#importform").submit(function(e) {

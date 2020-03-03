@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Properties;
+use App\Entity\PropertyExport;
 use App\Entity\PropertySearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -132,6 +133,19 @@ class PropertiesRepository extends ServiceEntityRepository
         $this->_em->persist($property);
         $this->_em->flush();
     }
+
+    // public function Export(PropertyExport $propertyExport)
+    // {
+    //     return $this->createQueryBuilder('p')
+
+    //         ->andWhere('p.Created_at >= :minDate')
+    //         ->setParameter('minDate', $propertyExport->getMinDate())
+    //         ->andWhere('p.Created_at <= :maxDate')
+    //         ->setParameter('maxDate', $propertyExport->getMaxDate())
+    //         ->getQuery()
+
+    //         ->getResult();
+    // }
 
     // /**
     //  * @return Properties[] Returns an array of Properties objects
