@@ -23,10 +23,10 @@
 {{ form_row(form.iduser) }}
 {{ form_row(form.description) }}
 <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 d-none">
         {{ form_row(form.ref) }}
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 ">
         <fieldset class="border pl-2">
             <legend class="w-auto ml-2">Status</legend>
             <div class="row">
@@ -34,6 +34,17 @@
                 <div class="col-6">{{ form_row(form.istop) }}</div>
             </div>
         </fieldset>
+    </div>
+</div>
+<div class="row  pt-2">
+    <div class="col-4">
+        {{ form_row(form.image1) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.image2) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.image3) }}
     </div>
 </div>
 

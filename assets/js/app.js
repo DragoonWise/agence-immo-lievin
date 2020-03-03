@@ -25,6 +25,7 @@ $(function() {
     e.preventDefault();
     // importanalyse
   });
+  // Case : Favorite
   $(".favoriteform").submit(function(e) {
     e.preventDefault();
     $.post("/user/toggleFavorite/" + e.target.propertyid.value).done(function(
@@ -42,6 +43,7 @@ $(function() {
       }
     });
   });
+  // Case : Preview File Image
   $(":file").fileinput({
     uploadAsync: false,
     maxFileCount: 1
@@ -62,17 +64,4 @@ $(function() {
   $(".imagemini").hover(function(e) {
     $("#imagemain").attr("src", e.target.getAttribute("srcview"));
   });
-  // View : Properties
-  // $("#propertiesfilter > form").submit(function(e) {
-  //   e.preventDefault();
-  //   console.log(e);
-  //   $.post(
-  //     this.baseURI.replace("/properties", "/partial/properties"),
-  //     JSON.stringify([
-  //       {'property_search' : e.target.property_search}
-  //     ])
-  //   ).done(function(data) {
-  //     $("#_properties").html(data);
-  //   });
-  // });
 });

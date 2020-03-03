@@ -44,7 +44,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/properties/{page}", name="adminproperties")
+     * @Route("/admin/properties/{page<\d+>}", name="adminproperties")
      */
     public function properties(int $page = 1)
     {
@@ -59,7 +59,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/properties/add", name="adminpropertiesadd")
      */
-    public function propertiesadd(Request $request)
+    public function propertiesadd(Request $request,PicturesRepository $picturesRepository)
     {
         $properties = new Properties();
         $form = $this->createForm(AdminPropertiesType::class, $properties);
@@ -70,9 +70,20 @@ class AdminController extends AbstractController
             // $form->getData() holds the submitted values
             // but, the original `$data` variable has also been updated
             $data = $form->getData();
+            $data->setref(substr($data->getidpropertytype()->getlabel(), 0, 2).$data->getiduser()->getId());
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($data);
+            $entityManager->flush();
+            // Proposer un bien donc pas d'images existantes
+            $picture1 = $picturesRepository->createPictureByFile($data->getImage1(), $data);
+            $picture2 = $picturesRepository->createPictureByFile($data->getImage2(), $data);
+            $picture3 = $picturesRepository->createPictureByFile($data->getImage3(), $data);
+            $entityManager->persist($picture1);
+            if (!is_null($picture2))
+                $entityManager->persist($picture2);
+            if (!is_null($picture3))
+                $entityManager->persist($picture3);
             $entityManager->flush();
 
             return $this->redirectToRoute('adminproperties');
@@ -86,7 +97,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/properties/edit/{id}", name="adminpropertiesedit")
+     * @Route("/admin/properties/edit/{id<\d+>}", name="adminpropertiesedit")
      */
     public function propertiesedit(Request $request, int $id)
     {
@@ -291,7 +302,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/mails/view/{id}", name="adminmailsview")
+     * @Route("/admin/mails/view/{id<\d+>}", name="adminmailsview")
      */
     public function mailsview(Request $request, int $id, MessagesRepository $messagesRepository)
     {

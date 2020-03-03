@@ -52,39 +52,6 @@ VALUES
     'Wise',
     '1'
   );
-INSERT INTO `properties` (
-    `IdAddress`,
-    `IdPropertyType`,
-    `IdUser`,
-    `Label`,
-    `Description`,
-    `IsRental`,
-    `Price`,
-    `EnergyClass`,
-    `LivingSpace`,
-    `Rooms`,
-    `BedRooms`,
-    `IsVisible`,
-    `IsTop`,
-    `Ref`
-  )
-VALUES
-  (
-    '1',
-    '2',
-    '1',
-    'Appartement 22m²',
-    '',
-    '1',
-    '650',
-    'C',
-    '22',
-    '2',
-    '1',
-    '0',
-    '0',
-    NULL
-  );
 INSERT INTO `Countries`
 VALUES
   (null, 'AF', 'Afghanistan');
