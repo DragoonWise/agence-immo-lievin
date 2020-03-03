@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
+use App\Repository\FavoritesRepository;
 use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
-use App\Repository\PropertyTypesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\IsNull;
+
 
 class HomeController extends AbstractController
 {
@@ -43,7 +43,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/property/view/{id}", name="propertyview")
      */
-    public function propertyview(PropertiesRepository $propertiesRepository, PicturesRepository $picturesRepository, int $id)
+    public function propertyview(PropertiesRepository $propertiesRepository, PicturesRepository $picturesRepository, FavoritesRepository $favoritesRepository, int $id)
     {
         $property = $propertiesRepository->findOneBy(['id' => $id]);
         $pictures = $picturesRepository->findAllByPropertyId($property->getid());
@@ -60,6 +60,10 @@ class HomeController extends AbstractController
                     break;
             }
         }
+        if ($this->getUser()) {
+            if ($favoritesRepository->findOneBy(['iduser' => $this->getUser()->getId(), 'idproperty' => $property->getId()]))
+                $property->setisfavorite(true);
+        }
         return $this->render('home/property.view.html.twig', [
             'title' => 'Agence Immo Liévin',
             'controller_name' => 'HomeController',
@@ -70,7 +74,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/properties/{type}", name="properties")
      */
-    public function properties(Request $request, PropertiesRepository $propertiesRepository, PropertyTypesRepository $propertyTypesRepository, string $type = 'Location')
+    public function properties(Request $request, PropertiesRepository $propertiesRepository, string $type = 'Location')
     {
         $search = new PropertySearch();
         $search
@@ -97,4 +101,5 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

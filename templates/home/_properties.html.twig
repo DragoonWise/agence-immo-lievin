@@ -1,0 +1,4 @@
+{% for property in properties %}
+{{ include('home/_property.card.html.twig',{property : property}) }}
+{% endfor %}
+{{ knp_pagination_render(properties) }}

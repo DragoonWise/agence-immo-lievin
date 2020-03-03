@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "491d2d9e50ee145d44b76344059ba668",
+    "content-hash": "06c2daba3dae093a897b00e3e0241ca5",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -1516,63 +1516,6 @@
             "time": "2014-01-12T16:20:24+00:00"
         },
         {
-            "name": "jms/metadata",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/schmittjoh/metadata.git",
-                "reference": "8d8958103485c2cbdd9a9684c3869312ebdaf73a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/8d8958103485c2cbdd9a9684c3869312ebdaf73a",
-                "reference": "8d8958103485c2cbdd9a9684c3869312ebdaf73a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "doctrine/cache": "^1.0",
-                "doctrine/coding-standard": "^4.0",
-                "phpunit/phpunit": "^7.0",
-                "symfony/cache": "^3.1|^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Metadata\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                },
-                {
-                    "name": "Asmir Mustafic",
-                    "email": "goetas@gmail.com"
-                }
-            ],
-            "description": "Class/method/property metadata management in PHP",
-            "keywords": [
-                "annotations",
-                "metadata",
-                "xml",
-                "yaml"
-            ],
-            "time": "2019-09-17T15:30:40+00:00"
-        },
-        {
             "name": "kartik-v/bootstrap-fileinput",
             "version": "v5.0.8",
             "source": {
@@ -2545,44 +2488,6 @@
                 "uuid"
             ],
             "time": "2020-02-21T04:36:14+00:00"
-        },
-        {
-            "name": "select2/select2",
-            "version": "4.0.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/select2/select2.git",
-                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/select2/select2/zipball/45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
-                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "dist/js/select2.js"
-                    ],
-                    "styles": [
-                        "dist/css/select2.css"
-                    ],
-                    "files": [
-                        "dist/js/select2.js",
-                        "dist/js/i18n/*.js",
-                        "dist/css/select2.css"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Select2 is a jQuery based replacement for select boxes.",
-            "homepage": "https://select2.org/",
-            "time": "2020-01-28T05:01:22+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -6821,103 +6726,6 @@
             "time": "2020-02-11T15:33:47+00:00"
         },
         {
-            "name": "vich/uploader-bundle",
-            "version": "1.13.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "282321173e8a01a295d04fa642658b6b10c3ec9a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/282321173e8a01a295d04fa642658b6b10c3ec9a",
-                "reference": "282321173e8a01a295d04fa642658b6b10c3ec9a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-simplexml": "*",
-                "jms/metadata": "^2.1",
-                "php": "^7.2",
-                "symfony/config": "^4.4 || ^5.0",
-                "symfony/console": "^4.4 || ^5.0",
-                "symfony/dependency-injection": "^4.4 || ^5.0",
-                "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
-                "symfony/form": "^4.4 || ^5.0",
-                "symfony/http-foundation": "^4.4 || ^5.0",
-                "symfony/http-kernel": "^4.4 || ^5.0",
-                "symfony/property-access": "^4.4 || ^5.0",
-                "symfony/string": "^5.0"
-            },
-            "require-dev": {
-                "alcaeus/mongo-php-adapter": "^1.1",
-                "doctrine/doctrine-bundle": "^2.0.3",
-                "doctrine/mongodb-odm": "^1.2",
-                "doctrine/orm": "^2.7",
-                "ext-sqlite3": "*",
-                "knplabs/knp-gaufrette-bundle": "^0.7",
-                "league/flysystem-bundle": "^1.4",
-                "league/flysystem-memory": "^1.0",
-                "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-                "mikey179/vfsstream": "^1.6",
-                "oneup/flysystem-bundle": "^3.3",
-                "phpunit/phpunit": "^8.5",
-                "symfony/asset": "^4.4 || ^5.0",
-                "symfony/browser-kit": "^4.4 || ^5.0",
-                "symfony/css-selector": "^4.4 || ^5.0",
-                "symfony/doctrine-bridge": "^4.4 || ^5.0",
-                "symfony/dom-crawler": "^4.4 || ^5.0",
-                "symfony/framework-bundle": "^4.4 || ^5.0",
-                "symfony/phpunit-bridge": "^4.3 || ^5.0",
-                "symfony/security-csrf": "^4.4 || ^5.0",
-                "symfony/translation": "^4.4 || ^5.0",
-                "symfony/twig-bridge": "^4.4 || ^5.0",
-                "symfony/twig-bundle": "^4.4 || ^5.0",
-                "symfony/validator": "^4.4 || ^5.0",
-                "symfony/var-dumper": "^4.4 || ^5.0",
-                "symfony/yaml": "^4.4 || ^5.0"
-            },
-            "suggest": {
-                "doctrine/doctrine-bundle": "For integration with Doctrine",
-                "doctrine/mongodb-odm-bundle": "For integration with Doctrine ODM",
-                "doctrine/orm": "For integration with Doctrine ORM",
-                "doctrine/phpcr-odm": "For integration with Doctrine PHPCR",
-                "knplabs/knp-gaufrette-bundle": "For integration with Gaufrette",
-                "liip/imagine-bundle": "To generate image thumbnails",
-                "ocramius/proxy-manager": "To use lazy services",
-                "oneup/flysystem-bundle": "For integration with Flysystem",
-                "symfony/asset": "To generate better links",
-                "symfony/yaml": "To use YAML mapping"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.14.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Vich\\UploaderBundle\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dustin Dobervich",
-                    "email": "ddobervich@gmail.com"
-                }
-            ],
-            "description": "Ease file uploads attached to entities",
-            "homepage": "https://github.com/dustin10/VichUploaderBundle",
-            "keywords": [
-                "file uploads",
-                "upload"
-            ],
-            "time": "2020-02-06T07:49:31+00:00"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.7.0",
             "source": {
@@ -7453,16 +7261,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.14.3",
+            "version": "v1.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded"
+                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c864e7f9b8d1e1f5f60acc3beda11299f637aded",
-                "reference": "c864e7f9b8d1e1f5f60acc3beda11299f637aded",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/b06ebe524357945a4e7ffee42ade880bdf9e1500",
+                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500",
                 "shasum": ""
             },
             "require": {
@@ -7517,7 +7325,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2019-11-07T00:56:03+00:00"
+            "time": "2020-03-02T15:21:16+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

@@ -3,30 +3,32 @@
 {% block  content %}
 <div class="row mt-2">
     <div class="col-4">
-        <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}" alt="" class="img-fluid" id="imagemain">
+        <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}" alt="" class="img-fluid"
+            id="imagemain">
+
         <div class="row m-1">
             <div class="col-4">
                 <img src="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('thumb') }}" alt=""
-                srcview="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}"
+                    srcview="{{ asset('build/images/' ~ property.imagename1) | imagine_filter('view') }}"
                     class="img-fluid imagemini">
             </div>
             <div class="col-4">
                 {% if property.imagename2 %}
                 <img src="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('thumb') }}" alt=""
-                srcview="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('view') }}"
+                    srcview="{{ asset('build/images/' ~ property.imagename2) | imagine_filter('view') }}"
                     class="img-fluid imagemini">
-                    {% endif %}
-                </div>
+                {% endif %}
+            </div>
             <div class="col-4">
                 {% if property.imagename3 %}
                 <img src="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('thumb') }}" alt=""
-                srcview="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('view') }}"
+                    srcview="{{ asset('build/images/' ~ property.imagename3) | imagine_filter('view') }}"
                     class="img-fluid imagemini">
                 {% endif %}
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-7">
         <h1>{{property.label}}</h1>
         <div>
             <b>{% if property.isrental %}
@@ -47,6 +49,22 @@
             <input type="hidden" name="idproperty" value="{{ property.id }}">
             <button class="btn btn-primary" type="submit">Nous contacter concernant ce bien</button>
         </form>
+    </div>
+    <div class="col-1">
+        {% if app.user %}
+        <form class="favoriteform">
+            <input type="hidden" name="propertyid" value='{{ property.id }}'>
+            <input type="hidden" name="userid" value='{{ app.user.id }}'>
+            <h2 class="d-none d-md-inline-block">Favori</h2>
+            {% if property.isfavorite %}
+            <button class="text-warning btn" id="btn-favorite-{{ property.id }}">
+                <i class="fa fa-star"></i></button>
+            {% else %}
+            <button class=" text-dark btn" id="btn-favorite-{{ property.id }}">
+                <i class=" fa fa-star"></i></button>
+            {% endif %}
+        </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

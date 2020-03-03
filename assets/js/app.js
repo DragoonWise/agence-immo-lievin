@@ -52,12 +52,27 @@ $(function() {
     }
   });
   $(".custom-file-label").remove();
+  // View : Home
   $(".carousel-inner")
     .children()
     .first()
     .addClass("active");
   $("#carousel").carousel();
+  // View : PropertyView
   $(".imagemini").hover(function(e) {
     $("#imagemain").attr("src", e.target.getAttribute("srcview"));
   });
+  // View : Properties
+  // $("#propertiesfilter > form").submit(function(e) {
+  //   e.preventDefault();
+  //   console.log(e);
+  //   $.post(
+  //     this.baseURI.replace("/properties", "/partial/properties"),
+  //     JSON.stringify([
+  //       {'property_search' : e.target.property_search}
+  //     ])
+  //   ).done(function(data) {
+  //     $("#_properties").html(data);
+  //   });
+  // });
 });
