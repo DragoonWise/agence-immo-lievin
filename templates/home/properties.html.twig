@@ -1,0 +1,58 @@
+{% extends 'home/base.html.twig' %}
+
+{% block content %}
+<div>
+    {{ form_start(form)}}
+    <div class="row">
+        <div class="col-12 col-md-4">
+            {{form_row(form.isrental)}}
+        </div>
+        <div class="col-12 col-md-4">
+            {{form_row(form.minarea)}}
+        </div>
+        <div class="col-12 col-md-4">
+            {{form_row(form.maxarea)}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">
+            {{form_row(form.rooms)}}
+        </div>
+        <div class="col-12 col-md-3">
+            {{form_row(form.bedrooms)}}
+        </div>
+        <div class="col-12 col-md-3">
+            {{form_row(form.minprice)}}
+        </div>
+        <div class="col-12 col-md-3">
+            {{form_row(form.maxprice)}}
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-12 col-md-6">
+            {{ form_row(form.propertytype) }}
+        </div>
+        <div class="col-12 col-md-6">
+            {{ form_row(form.submit) }}
+        </div>
+    </div>
+    {{ form_end(form)}}
+</div>
+<div class="row">
+    {% for property in properties %}
+    {{ include('home/_property.card.html.twig',{property : property}) }}
+    {% endfor %}
+    {{ knp_pagination_render(properties) }}
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
+{% endblock %}
+
+{% block javascripts %}
+{# {{ encore_entry_script_tags('app') }} #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+{{ encore_entry_script_tags('properties') }}
+{% endblock %}

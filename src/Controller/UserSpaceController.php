@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Messages;
-use App\Entity\Pictures;
 use App\Entity\Addresses;
 use App\Entity\Favorites;
 use App\Entity\Properties;
@@ -14,8 +13,6 @@ use App\Repository\FavoritesRepository;
 use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
 use App\Repository\UsersRepository;
-use Exception;
-use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -154,7 +151,7 @@ class UserSpaceController extends AbstractController
     /**
      * @Route("/user/toggleFavorite/{idproperty}", name="userfavoritestoggle")
      */
-    public function favoritestoggle(Request $request, FavoritesRepository $favoritesRepository, int $idproperty,PropertiesRepository $propertiesRepository)
+    public function favoritestoggle(Request $request, FavoritesRepository $favoritesRepository, int $idproperty, PropertiesRepository $propertiesRepository)
     {
         try {
             $entityManager = $this->getDoctrine()->getManager();

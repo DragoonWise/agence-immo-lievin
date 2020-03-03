@@ -37,6 +37,8 @@ class PicturesRepository extends ServiceEntityRepository
 
     public function findFirstImageByPropertyIds($propertyids)
     {
+        if ($propertyids == [])
+        return [];
         $query = $this->createQueryBuilder('p')
             ->groupBy('p.idproperty')
             ->having('p.idproperty in (' . implode(',', $propertyids) . ')')

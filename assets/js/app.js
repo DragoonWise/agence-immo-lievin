@@ -14,6 +14,8 @@ import $ from "jquery";
 require("bootstrap");
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 import "../bootstrap-fileinput/js/fileinput.js";
+// import "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js";
+
 $(function() {
   $("#exportform").submit(function(e) {
     e.preventDefault();

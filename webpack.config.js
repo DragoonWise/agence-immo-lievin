@@ -38,6 +38,8 @@ Encore
     // only copy files matching this pattern
     //pattern: /\.(png|jpg|jpeg)$/
   })
+  .addEntry('properties', './assets/js/properties.js')
+
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
