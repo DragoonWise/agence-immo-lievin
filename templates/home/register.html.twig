@@ -1,0 +1,33 @@
+{% extends 'home/base.html.twig' %}
+
+{% block title %}S'enregistrer{% endblock %}
+
+{% block content %}
+{{ form_start(form) }}
+{{ form_errors(form) }}
+<div class="row">
+    <div class="col-6">{{ form_row(form.email) }}</div>
+    <div class="col-6">{{ form_row(form.password) }}</div>
+</div>
+<div class="row">
+    <div class="col-6">{{ form_row(form.lastname) }}</div>
+    <div class="col-6">{{ form_row(form.firstname) }}</div>
+</div>
+<fieldset class='border px-1 mb-2'>
+    <legend class='w-auto ml-2'>Adresse</legend>
+    {{ form_row(form.idaddress.address1) }}
+    {{ form_row(form.idaddress.address2) }}
+    {{ form_row(form.idaddress.address3) }}
+    {{ form_row(form.idaddress.address4) }}
+    <div class="row">
+        <div class="col-6">{{ form_row(form.idaddress.postcode) }}</div>
+        <div class="col-6">{{ form_row(form.idaddress.city) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-6">{{ form_row(form.idaddress.state) }}</div>
+        <div class="col-6">{{ form_row(form.idaddress.country) }}</div>
+    </div>
+</fieldset>
+{{ form_row(form.submit, { 'label': 'S\'enregistrer' }) }}
+{{ form_end(form) }}
+{% endblock %}

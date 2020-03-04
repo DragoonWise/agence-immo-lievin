@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\PropertySearch;
+use App\Entity\Users;
 use App\Form\PropertySearchType;
+use App\Form\UsersType;
 use App\Repository\FavoritesRepository;
 use App\Repository\PicturesRepository;
 use App\Repository\PropertiesRepository;
@@ -37,6 +39,30 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
             'properties' => $properties,
             'picturescarousel' => $pictures,
+        ]);
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function register(Request $request)
+    {
+        $user = new Users();
+        $form = $this->createForm(UsersType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original '$data' variable has also been updated
+            $data = $form->getData();
+            // ... perform some action, such as saving the task to the database
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($data);
+            $entityManager->flush();
+        }
+        return $this->render('home/register.html.twig', [
+            'title' => 'Agence Immo Liévin',
+            'controller_name' => 'HomeController',
+            'form' => $form->createView(),
         ]);
     }
 
@@ -78,7 +104,6 @@ class HomeController extends AbstractController
     {
         $search = new PropertySearch();
         $search
-            ->setIstop(true)
             ->setIsvisible(true)
             ->setIsdeleted(false)
             ->setIsrental($type == 'Location');
@@ -101,5 +126,4 @@ class HomeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

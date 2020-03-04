@@ -73,25 +73,16 @@ $(function() {
     uploadAsync: false,
     maxFileCount: 1,
     showUpload: false,
-    initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
-    initialPreviewFileType: "image", // image is the default and can be overridden in config below
-    initialPreview: [$("#image1").attr("src")]
   });
   $("#properties_image2").fileinput({
     uploadAsync: false,
     maxFileCount: 1,
     showUpload: false,
-    initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
-    initialPreviewFileType: "image", // image is the default and can be overridden in config below
-    initialPreview: [$("#image2").attr("src")]
   });
   $("#properties_image3").fileinput({
     uploadAsync: false,
     maxFileCount: 1,
     showUpload: false,
-    initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
-    initialPreviewFileType: "image", // image is the default and can be overridden in config below
-    initialPreview: [$("#image3").attr("src")]
   });
   $(":file").change(function(e) {
     if (e.target.baseURI == "http://agence-immo-lievin.fr/user/propose") {

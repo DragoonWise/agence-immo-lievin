@@ -80,6 +80,8 @@ class PropertiesRepository extends ServiceEntityRepository
         }
         if (!$withdeleted)
             $query = $query->andWhere('p.deleted = 0');
+        $query = $query->Join('App\\Entity\\Users', 'u');
+        $query = $query->andwhere('p.iduser = u.id and u.deleted = 0');
         $pagination = $this->paginator->paginate(
             $query,
             $page
