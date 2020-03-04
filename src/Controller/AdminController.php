@@ -73,7 +73,7 @@ class AdminController extends AbstractController
         //        $form2->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$data` variable has also been updated
+            // but, the original '$data' variable has also been updated
             $data = $form->getData();
             $data->setref(substr($data->getidpropertytype()->getlabel(), 0, 2) . $data->getiduser()->getId());
             // ... perform some action, such as saving the task to the database
@@ -132,7 +132,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$data` variable has also been updated
+            // but, the original '$data' variable has also been updated
             $data = $form->getData();
             // ... perform some action, such as saving the task to the database
             $entityManager = $this->getDoctrine()->getManager();
@@ -210,7 +210,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$data` variable has also been updated
+            // but, the original '$data' variable has also been updated
             $data = $form->getData();
 
             // ... perform some action, such as saving the task to the database
@@ -238,7 +238,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$data` variable has also been updated
+            // but, the original '$data' variable has also been updated
             $data = $form->getData();
             if (!is_null($data->getPassword()) && $data->getPassword() != '')
                 $data->setPassword(password_hash($data->getPassword(), PASSWORD_BCRYPT));
@@ -283,15 +283,13 @@ class AdminController extends AbstractController
     {
         $propertyExport = new PropertyExport();
         $formExport = $this->createForm(PropertyExportType::class, $propertyExport);
-        // $form2 = $this->createForm(ImageType::class);
         $formExport->handleRequest($request);
-        //        $form2->handleRequest($request);
-        var_dump($formExport);
         if ($formExport->isSubmitted() && $formExport->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$data` variable has also been updated
+            // but, the original '$data' variable has also been updated
             $data = $formExport->getData();
-            $this->export($data->getmindate(),$data->getmaxdate());
+
+            return $this->export($data->getmindate(), $data->getmaxdate());
         }
         return $this->render('admin/importexport.html.twig', [
             'controller_name' => 'AdminController',
@@ -300,42 +298,44 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function export(DateTime $minDate,DateTime $maxDate)
+    public function export(DateTime $minDate, DateTime $maxDate): StreamedResponse
     {
         $response = new StreamedResponse();
-        $response->setCallback(function () {
-            $handle = fopen('php://output', 'w+');
-
-            // Add the header of the CSV file
-            fputcsv($handle, array('Name', 'Surname', 'Age', 'Sex'), ';');
-            // Query data from database
-            $results = $this->connection->prepare("Select * From Properties p where p.created_at>=:minDate and p.created_at<=:maxDate");
-            $results->execute([]);
-            // Add the data queried from database
-            while ($row = $results->fetch()) {
-                fputcsv(
-                    $handle, // The file pointer
-                    array($row['name'], $row['surname'], $row['age'], $row['sex']), // The fields
-                    ';' // The delimiter
-                );
-            }
-
-            fclose($handle);
-        });
-
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        $response->setCallback(function () {
+            echo '';
+        });
+        $handle = fopen('php://output', 'w+');
+
+        // Add the header of the CSV file
+        fputcsv($handle, array('Id', 'IdAddress', 'IdPropertyType', 'IdUser', 'Label', 'Description', 'IsRental', 'IsVisible', 'IsTop', 'Price', 'EnergyClass', 'LivingSpace', 'Rooms', 'BedRooms', 'Ref', 'Created_at', 'Updated_at', 'Deleted_at', 'Deleted'), ';');
+        // Query data from database
+        $results = $this->connection->prepare("Select * From Properties p where p.created_at>=:minDate and p.created_at<=:maxDate");
+        $results->execute(['minDate' => $minDate->format('Y-m-d'), 'maxDate' => $maxDate->format('Y-m-d')]);
+        // // Add the data queried from database
+        while ($row = $results->fetch()) {
+            fputcsv(
+                $handle, // The file pointer
+                array($row['Id'], $row['IdAddress'], $row['IdPropertyType'], $row['IdUser'], $row['Label'], $row['Description'], $row['IsRental'], $row['IsVisible'], $row['IsTop'], $row['Price'], $row['EnergyClass'], $row['LivingSpace'], $row['Rooms'], $row['BedRooms'], $row['Ref'], $row['Created_at'], $row['Updated_at'], $row['Deleted_at'], $row['Deleted']), // The fields
+                ';' // The delimiter
+            );
+        }
+
+        fclose($handle);
+        // });
+
 
         return $response;
     }
 
-    public function importanalyse($filename)
-    {
-        return $this->render('admin/_importanalyse.html.twig', [
-            'analyse' => null
-        ]);
-    }
+    // public function importanalyse($filename)
+    // {
+    //     return $this->render('admin/_importanalyse.html.twig', [
+    //         'analyse' => null
+    //     ]);
+    // }
 
     /**
      * @Route("/admin/mails", name="adminmails")

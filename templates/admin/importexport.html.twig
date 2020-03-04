@@ -23,18 +23,10 @@
 </div>
 <div class="row border">
     <!-- Export -->
-    <form action="" class="col-12 row" id="exportform" method="POST">
+    <div action="" class="col-12" id="exportform">
         <div class="form-group col-12">
             <h2>Exporter la liste des biens (format CSV)</h2>
         </div>
-        {# <div class="form-group col-12 col-md-4">
-            <label for='exportdate1'>Du : </label>
-            <input type="date" name="exportdate1" id="exportdate1">
-        </div>
-        <div class="form-group col-12 col-md-4">
-            <label for='exportdate2'>Au : </label>
-            <input type="date" name="exportdate2" id="exportdate2">
-        </div> #}
         {{ form_start(formExport) }}
         <div class="row align-items-end col-12">
             <div class="col-12 col-md-4">{{ form_row(formExport.minDate) }}</div>
@@ -42,6 +34,6 @@
             <div class="col-12 col-md-4">{{ form_row(formExport.submitExport) }}</div>
         </div>
         {{ form_end(formExport) }}
-    </form>
+    </div>
 </div>
 {% endblock %}

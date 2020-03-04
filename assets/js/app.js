@@ -12,15 +12,16 @@ import "../css/app.scss";
 import $ from "jquery";
 
 require("bootstrap");
+require("webpack-jquery-ui/datepicker");
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 import "../bootstrap-fileinput/js/fileinput.js";
 // import "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js";
 
 $(function() {
-  $("#exportform").submit(function(e) {
-    // e.preventDefault();
-    // Export du fichier
-  });
+  // console.log('datepicker start');
+  // $('#property_export_minDate').datepicker();
+  // $('#property_export_maxDate').datepicker();
+  // console.log('datepicker end');
   $("#importform").submit(function(e) {
     e.preventDefault();
     // importanalyse
