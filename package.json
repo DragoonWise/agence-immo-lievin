@@ -22,7 +22,7 @@
         "bootstrap-fileinput": "kartik-v/bootstrap-fileinput",
         "cropper": "^4.1.0",
         "jquery": "^3.4.1",
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "^1.13.2",
         "webpack-jquery-ui": "^2.0.1"
     }
 }
